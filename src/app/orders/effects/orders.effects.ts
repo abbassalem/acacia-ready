@@ -8,13 +8,9 @@ import * as fromOrderActions from '../../orders/actions/orders.actions';
 import * as fromOrderReducer from '../../orders/reducers/orders.reducer';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import * as fromBasketReducer from './../../shop/reducers/basket.reducer';
 import * as fromBasketActions from './../../shop/actions/basket.actions';
 import { Store } from '@ngrx/store';
-import { DocumentData } from '@angular/fire/compat/firestore';
-import { Product } from 'src/app/shop/models/product.model';
-import { CREATE_EFFECT_METADATA_KEY } from '@ngrx/effects/src/models';
 
 @Injectable()
 export class OrdersEffects {
@@ -57,19 +53,19 @@ export class OrdersEffects {
           )
   });
 
-  // saveOrderSuccess$ =  createEffect( () => {
-  //   return this.actions$.pipe(
-  //       ofType<fromOrderActions.SaveOrderComplete>(fromOrderActions.OrderActionTypes.SaveOrderComplete),
-  //       switchMap( action => {
-  //           console.log('saveOrderSuccess');
-  //           console.dir(action.payload);
-  //           this.snackBar.open('Order saved successfully.');
-  //           this.basketStore.dispatch(new fromBasketActions.RemoveAll());
-  //           this.orderStore.dispatch(new fromOrderActions.Reset());
-  //           return this.router.navigate(['/']);
-  //       })
-  //     )
-  //   });
+  saveOrderSuccess$ =  createEffect( () => {
+    return this.actions$.pipe(
+        ofType<fromOrderActions.SaveOrderComplete>(fromOrderActions.OrderActionTypes.SaveOrderComplete),
+        switchMap( (action) => {
+            console.log('saveOrderSuccess');
+            console.dir(action.payload);
+            this.snackBar.open('Order saved successfully.');
+            this.basketStore.dispatch(new fromBasketActions.RemoveAll());
+            this.orderStore.dispatch(new fromOrderActions.Reset());
+            return this.router.navigate(['/']);
+        })
+      )
+    }, { dispatch: false });
   
 
   getAllOrders$ = createEffect( () => {
@@ -90,16 +86,6 @@ export class OrdersEffects {
       })
     )
   });
-
-  // transforToOrder(doc: QueryDocumentSnapshot<DocumentData> ): Order{
-  //   let retDoc: Array<Order> = new Array() ;
-  //   let id:string;
-  //   return <Order>doc.data();
-    // docs.forEach((doc) => {
-      // retDoc.push(<Order>Object.assign(doc.data(), {id: doc.id}));
-    // })
-    // return retDoc;
-  // }
 
 //   @Effect()
 // loadBasket$: Observable<Action> = this.actions$
