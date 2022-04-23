@@ -6,7 +6,8 @@ export const environment = {
     projectId: "order-acacia",
     storageBucket: "order-acacia.appspot.com",
     messagingSenderId: "1095926620164",
-    appId: "1:1095926620164:web:6a3517347668dbcb845551"
+    appId: "1:1095926620164:web:6a3517347668dbcb845551",
+    databaseURL: "https://order-acacia-default-rtdb.europe-west1.firebasedatabase.app/"
   },
 
 "deliveryTimes": [
