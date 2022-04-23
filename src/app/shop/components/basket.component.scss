@@ -1,0 +1,83 @@
+table {
+    width: 80%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    box-shadow: 5px 5px 5px grey;
+    border-style: inset;
+    padding: 40px;
+    font-size: 12px;
+}
+
+.basket-buttons {
+    width: 80%;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 5px;
+    font-size: 10px;
+}
+
+td {
+    padding: 16px;
+}
+
+th {
+    background-color: #a09e99;
+    /* background-color:#ffd740; */
+    padding: 16px;
+    color: black;
+}
+
+tr:nth-child(even) {
+    background-color: lightgrey;
+    color: blue;
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(235, 211, 211);
+    color: blue;
+}
+
+// tr:nth-last-child() {
+//     background-color: white;
+//     color: blue;
+// }
+
+.footer {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: white;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+.active {
+    font-weight: bold;
+    color: #ffd740;
+}
+
+.rowSelected {
+    font-weight: bold;
+    color: black;
+    background-color: #ffd740;
+}
+
+.blinking {
+    color: orange;
+    font-weight: bold;
+    font-style: oblique
+}
+
+tbody {
+    font-size: 14px;
+}

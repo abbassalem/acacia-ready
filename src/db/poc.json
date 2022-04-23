@@ -1,0 +1,53 @@
+{
+  "students": [
+     {
+      "id":1,
+      "data": {
+        "id": 1,
+        "title": "Build an API using GO",
+        "authorId": 2
+      }
+    }
+  ],
+  "articles": [
+    {
+      "id": 1,
+      "title": "Build an API using GO",
+      "authorId": 2
+    },
+    {
+      "id": 2,
+      "title": "Build an API using API Platform",
+      "authorId": 1
+    },
+    {
+      "id": 3,
+      "title": "new title",
+      "authorId": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "Brilliant",
+      "articleId": 1
+    },
+    {
+      "id": 2,
+      "body": "Awesome",
+      "articleId": 2
+    }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "email": "Adam",
+      "title": "Romain Pierlot"
+    },
+    {
+      "id": 2,
+      "email": "Abbas",
+      "title": "Quentin Neyrat"
+    }
+  ]
+}

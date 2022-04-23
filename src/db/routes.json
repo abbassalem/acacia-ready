@@ -1,0 +1,5 @@
+{
+  "/api/categories": "/categories",
+  "/api/users?email=:email&password=:password": "/users?email=:email&password=:password",
+  "/api/$1/*": "/$1/*"
+}

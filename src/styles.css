@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/* purple-green */
+indigo-pink, pink-bluegrey
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+
+.mat-progress-spinner svg {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.product-title {
+  font-size: 14px;
+  color: black
+}
+
+.price {
+  font-size: 14px;
+  color: blue
+}
+
+.desription {
+  font-size: 10px;
+  color: black
+}
