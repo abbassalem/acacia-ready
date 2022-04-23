@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Order } from '../../shop/models/order.model';
 import { OrderService } from '../services/orders.service';
