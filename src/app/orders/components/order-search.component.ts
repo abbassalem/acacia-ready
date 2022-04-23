@@ -1,5 +1,5 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DurationWithStatus } from 'src/app/shop/models/order.model';
 
 @Component({
@@ -84,8 +84,8 @@ export class OrderSearchComponent implements OnInit {
   ngOnInit() {
     this.searchGroup = new FormGroup(
       {
-        startDate: new FormControl(''),
-        endDate: new FormControl(''),
+        startDate: new FormControl(new Date(), [Validators.required]),
+        endDate: new FormControl(new Date(), [Validators.required]),
         orderStatus: new FormControl('OPEN')
       }
     );

@@ -1,13 +1,14 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyDP4C4jNSGTIHl5xPzR64qTYVS14ADb8WI",
-    authDomain: "order-acacia.firebaseapp.com",
-    projectId: "order-acacia",
-    storageBucket: "order-acacia.appspot.com",
-    messagingSenderId: "1095926620164",
-    appId: "1:1095926620164:web:6a3517347668dbcb845551",
-    databaseURL: "https://order-acacia-default-rtdb.europe-west1.firebasedatabase.app/"
+    apiKey: "AIzaSyAkhZZSPNGgb-a1o3pWGE0Bi7vLLk35VHM",
+    authDomain: "acacia-ready.firebaseapp.com",
+    projectId: "acacia-ready",
+    storageBucket: "acacia-ready.appspot.com",
+    messagingSenderId: "465010542685",
+    appId: "1:465010542685:web:f0df541e998ef0dd8c25b4",
+    measurementId: "G-TXRLTZ4K9F",
+    databaseURL: "https://acacia-ready-default-rtdb.europe-west1.firebasedatabase.app/"
   },
 
 "deliveryTimes": [
