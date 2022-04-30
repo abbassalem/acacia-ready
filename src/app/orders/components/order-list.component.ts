@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DurationWithStatus, Order } from '../../shop/models/order.model';
 
 @Component({
@@ -6,7 +7,7 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
   template: `
   <app-order-search (searchWithDates)= "propagateSearch($event)"></app-order-search>
   <mat-accordion  style="min-width: 80%">
-    <app-order-view  *ngFor="let order of orders" [order]="order"> </app-order-view>
+    <app-order-view  *ngFor="let orderElement of orders$ | async" [order]="orderElement"> </app-order-view>
   </mat-accordion>
 `,
   styles: [
@@ -21,14 +22,13 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
       float:left
     }
   `,
-  ],
+  ]
 })
 
 export class OrderListComponent {
 
   @Output() searching = new EventEmitter<DurationWithStatus>() ;
-  @Input() orders: Order[];
-  nonFilteredOrders: Order[];
+  @Input() orders$: Observable<Order[]>;
 
   constructor() {
   }

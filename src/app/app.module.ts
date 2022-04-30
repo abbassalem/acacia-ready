@@ -68,8 +68,7 @@ import { ShopModule } from './shop/shop.module';
     CoreModule.forRoot(),
     ShopModule.forRoot(),
     AuthModule.forRoot(),
-    OrdersModule.forRoot(),
-
+    OrdersModule.forRoot()
   ],
   providers: [ConfigService,
     /**

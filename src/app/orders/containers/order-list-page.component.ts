@@ -13,7 +13,7 @@ import { filter, map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-order-list  (searching)="executeQuery($event)" 
-            [userId]="loggedUserId" [orders]="orders$ | async ">
+            [userId]="loggedUserId" [orders$]="orders$">
     </app-order-list>
   `,
         

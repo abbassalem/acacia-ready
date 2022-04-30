@@ -9,15 +9,15 @@ import { ShopState } from '../../shop/reducers';
   selector: 'app-order-view',
   template: `
 <br>
-  <mat-expansion-panel  (opened)="open(id)" (closed)="panelOpenState = false"  style="min-width: 70%">
+  <mat-expansion-panel  (opened)="open(id)" (closed)="panelOpenState = false"  style="width: 80%">
       <mat-expansion-panel-header>
           <img mat-card-sm-image style="width:20px;height:20px" *ngIf="thumbnail" [src]="thumbnail"/>
           &nbsp;&nbsp;&nbsp;&nbsp;Order Date:<b>{{ orderDate | date: 'dd/MM/yyyy:HH:mm' }}</b>
           &nbsp;&nbsp;&nbsp;&nbsp;Amount: <b>{{ amount | currency : 'EUR':'symbol':'1.2-2'}} </b>
-          &nbsp;&nbsp;&nbsp;&nbsp;Delivery Date: <b>{{ deliveryDate | date: 'dd/MM/yyyy'}}:{{ deliveryTime }} </b>
-          &nbsp;&nbsp;&nbsp;&nbsp;Delivery Date: <b>{{ deliveryTime }}</b>
-          &nbsp;&nbsp;&nbsp;&nbsp;Paid?: <mat-checkbox  checked="paid"></mat-checkbox>
-          &nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;Delivery Date: <b>{{ deliveryDate | date: 'dd/MM/yyyy'}} </b>
+          &nbsp;&nbsp;&nbsp;&nbsp;Delivery Time: <b>{{ deliveryTime }}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paid&nbsp;<mat-checkbox width="20%" [checked]= "order.paid" [disabled]="true" color="accent" ></mat-checkbox>
+          &nbsp;
     </mat-expansion-panel-header>
     <mat-action-row>
     <button mat-raised-button color="accent" (click) = "addToBasket('Items added to basket successfully')">

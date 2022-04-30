@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order, DurationWithStatus} from '../../shop/models/order.model';
-import { AngularFirestore, DocumentData, DocumentReference , QuerySnapshot } 
+import { AngularFirestore, DocumentData , DocumentReference, DocumentSnapshot, QuerySnapshot } 
         from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
@@ -9,9 +9,15 @@ export class OrderService {
 
     constructor(private db: AngularFirestore) {}
   
-    saveOrder(order: Order): Promise<DocumentReference> {
-      return this.db.collection('orders').add(order);      
-   }
+    async saveOrder(order: Order): Promise<Order> {
+      let saved: Order;  
+      let docRef = await this.db.collection('orders').add(order);
+      let docData = <Order> await (await docRef.get()).data();
+      saved = Object.assign({id: docRef.id}, docData);
+      this.db.collection('orders').doc(docRef.id).set({id: docRef.id}, {merge:true});
+      return saved;  
+    }
+
 
    // TODO: use duration to filter 
   getOrders(userId: string, inputDurationWithStatus: DurationWithStatus): Observable<QuerySnapshot<DocumentData>> {

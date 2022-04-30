@@ -63,8 +63,8 @@ export class BasketComponent implements OnInit {
       
     this.basketForm = this.fb.group({
         deliveryGroup: this.fb.group({
-            deliveryTime: this.fb.control('', Validators.required),
-            deliveryDate: this.fb.control('', Validators.required),
+            deliveryTime: this.fb.control('07:00', Validators.required),
+            deliveryDate: this.fb.control(new Date(), Validators.required),
             addressOption: this.fb.control(1, Validators.required)
         }),
         // addressGroup: this.fb.group({
@@ -108,7 +108,7 @@ export class BasketComponent implements OnInit {
           return (item.product.price * item.quantity);
         }
       })
-      .reduce((acc, value) => acc + value, 0);
+      .reduce((acc, val) => acc + val, 0);
   }
 
   toggleShowSteps() {

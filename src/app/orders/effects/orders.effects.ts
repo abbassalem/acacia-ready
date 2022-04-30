@@ -27,31 +27,18 @@ export class OrdersEffects {
   saveOrder$ = createEffect( () => {
     return this.actions$.pipe(
           ofType<fromOrderActions.SaveOrder>(fromOrderActions.OrderActionTypes.SaveOrder),
-          map(action => action.payload),
-          switchMap( (order: Order) => {
-            console.log('before saving...');
-            console.dir(order);
-            return this.orderService.saveOrder(order);
-          }),
-          map( orderRef => {
-            let saved = {};
-            console.log('orderref: ');
-            console.dir(orderRef);
-            console.log('saved ID: ' + orderRef.id);
-            orderRef.get().then(
-              docData => { 
-                console.log('inside docDate');
-                console.dir(docData);
-                Object.assign(saved,docData.data(), {id:docData.id});
-                console.log('saved object');
-              console.dir(saved);
-              })
-              return new fromOrderActions.SaveOrderComplete(<Order>saved);
-            }
+          switchMap( (action: fromOrderActions.SaveOrder) => 
+            this.orderService.saveOrder(action.payload)
           ),
+          map( (order) => {
+              console.log('order in saveOrder$');
+              console.dir(order);
+              return new fromOrderActions.SaveOrderComplete(<Order>order);
+            }),
           catchError (error => of(error))
           )
-  });
+  }, {dispatch: true}
+  );
 
   saveOrderSuccess$ =  createEffect( () => {
     return this.actions$.pipe(
@@ -63,7 +50,7 @@ export class OrdersEffects {
             this.basketStore.dispatch(new fromBasketActions.RemoveAll());
             this.orderStore.dispatch(new fromOrderActions.Reset());
             return this.router.navigate(['/']);
-        })
+        })          
       )
     }, { dispatch: false });
   
@@ -77,9 +64,16 @@ export class OrdersEffects {
         return this.orderService.getOrders(action.payload.userId, action.payload.durationWithStatus)
         .pipe(
           map( q => {
-              resOrders =  q.docs.map( doc => (doc.data)); 
-              return new fromOrderActions.LoadComplete(resOrders);
-          }),
+              resOrders =  q.docs.map( 
+                doc => {
+                  console.info('doc.data()');
+                  console.dir(doc.data());
+                  return doc.data();
+                })
+                console.info('resorderss');
+                console.dir(resOrders);
+                return new fromOrderActions.LoadComplete(resOrders);
+            }),
           catchError(err => of(new fromOrderActions.LoadError('error in loading orders'))
           )
         )
