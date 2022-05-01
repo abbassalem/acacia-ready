@@ -5,10 +5,13 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
 @Component({
   selector: 'app-order-list',
   template: `
+  <mat-card>
   <app-order-search (searchWithDates)= "propagateSearch($event)"></app-order-search>
-  <mat-accordion  style="min-width: 80%">
-    <app-order-view  *ngFor="let orderElement of orders$ | async" [order]="orderElement"> </app-order-view>
+  <mat-accordion  style="width: 100%;">
+    <app-order-view  *ngFor="let orderElement of orders" [order]="orderElement"> </app-order-view>
   </mat-accordion>
+  </mat-card>
+  
 `,
   styles: [
     `
@@ -28,13 +31,12 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
 export class OrderListComponent {
 
   @Output() searching = new EventEmitter<DurationWithStatus>() ;
-  @Input() orders$: Observable<Order[]>;
+  @Input() orders: Order[];
 
   constructor() {
   }
 
   propagateSearch(event: DurationWithStatus) {
-    console.log('in order-list  clicked');
     this.searching.emit(event);
   }
 

@@ -80,7 +80,8 @@ export class BasketComponent implements OnInit {
     
     if(this.loggedUser){
       this.basketForm.controls['contactGroup'].get('email').setValue(this.loggedUser.email);
-      this.basketForm.controls['contactGroup'].get('telephone').setValue(this.loggedUser.phoneNumber);
+      this.basketForm.controls['contactGroup'].get('telephone').setValue('07812329253');
+      // this.basketForm.controls['contactGroup'].get('telephone').setValue(this.loggedUser.phoneNumber);
     }
   }
 

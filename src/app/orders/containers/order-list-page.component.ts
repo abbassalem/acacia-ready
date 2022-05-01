@@ -13,7 +13,7 @@ import { filter, map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-order-list  (searching)="executeQuery($event)" 
-            [userId]="loggedUserId" [orders$]="orders$">
+            [userId]="loggedUserId" [orders]="orders$ | async">
     </app-order-list>
   `,
         
@@ -29,7 +29,6 @@ import { filter, map } from 'rxjs/operators';
 export class OrderListPageComponent implements OnInit {
 
   orders$: Observable<Order[]>;
-  orders: Order[];
   selectedOrderId$: Observable<string>;
   loggedUserId: string;
 
@@ -44,7 +43,6 @@ export class OrderListPageComponent implements OnInit {
   }
 
   executeQuery(inputDurationWithStatus: DurationWithStatus) {
-    console.log('in order-list-page clicked');
     let payload = {userId: this.loggedUserId, durationWithStatus: inputDurationWithStatus};
     this.orderStore.dispatch(new Reset);
     this.orderStore.dispatch(new Load(payload));

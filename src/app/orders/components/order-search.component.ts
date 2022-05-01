@@ -1,5 +1,6 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { OpenSidenav } from 'src/app/core/actions/layout.actions';
 import { DurationWithStatus } from 'src/app/shop/models/order.model';
 
 @Component({
@@ -23,10 +24,9 @@ import { DurationWithStatus } from 'src/app/shop/models/order.model';
               
             <mat-form-field>
                   <mat-select formControlName="orderStatus">
-                      <mat-option  value="OPEN">Open</mat-option>
-                      <mat-option  value="DELIVERED">Delivered</mat-option>
-                      <mat-option  value="CANCELLED">Cancelled</mat-option>
-                      <mat-option  value="CLOSED">Closed</mat-option>
+                    <mat-option *ngFor= "let status of statusList" [value]="status.value" 
+                      [selected]="status.isSelected">{{status.label}}
+                    </mat-option>
                   </mat-select>
             </mat-form-field>
 
@@ -77,14 +77,16 @@ export class OrderSearchComponent implements OnInit {
   @Input() error = '';
   @Output() searchWithDates = new EventEmitter<DurationWithStatus>();
   searchGroup: FormGroup;
+  statusList: Status[] = [];
 
   constructor() {
   }
 
   ngOnInit() {
+    this.initilizeStatusList();
     this.searchGroup = new FormGroup(
       {
-        startDate: new FormControl(new Date(), [Validators.required]),
+        startDate: new FormControl(new Date(0), [Validators.required]),
         endDate: new FormControl(new Date(), [Validators.required]),
         orderStatus: new FormControl('OPEN')
       }
@@ -92,18 +94,26 @@ export class OrderSearchComponent implements OnInit {
   }
 
   executeSearch() {
-    console.log('clicked');
     let durationWithStatus: DurationWithStatus = {
       start: this.searchGroup.get('startDate').value.getTime(),
       end: this.searchGroup.get('endDate').value.getTime(),
       status: this.searchGroup.get('orderStatus').value
     };
-    console.log('before emit: ');
-    console.dir(durationWithStatus);
-    // TODO display error message
-    // if(durationWithStatus.start > durationWithStatus.end) {
-    //   return ;
-    // }
     this.searchWithDates.emit(durationWithStatus);
   }
+
+  initilizeStatusList(){
+    this.statusList.push({value: 'ALL', label: 'All', isSelected: false});
+    this.statusList.push({value: 'OPEN', label: 'Open', isSelected: true});
+    this.statusList.push({value: 'CLOSED', label: 'Closed', isSelected: false});
+    this.statusList.push({value: 'DELIVERED', label: 'Delivered', isSelected: false});
+    this.statusList.push({value: 'CANCELLED', label: 'Cancelled', isSelected: false});
+  }
 }
+
+export interface Status {
+  value: string;
+  label: string;
+  isSelected: boolean;
+} 
+

@@ -31,8 +31,6 @@ export class OrdersEffects {
             this.orderService.saveOrder(action.payload)
           ),
           map( (order) => {
-              console.log('order in saveOrder$');
-              console.dir(order);
               return new fromOrderActions.SaveOrderComplete(<Order>order);
             }),
           catchError (error => of(error))
@@ -44,9 +42,13 @@ export class OrdersEffects {
     return this.actions$.pipe(
         ofType<fromOrderActions.SaveOrderComplete>(fromOrderActions.OrderActionTypes.SaveOrderComplete),
         switchMap( (action) => {
-            console.log('saveOrderSuccess');
-            console.dir(action.payload);
-            this.snackBar.open('Order saved successfully.');
+            this.snackBar.open('Order saved successfully.', 'Close',{
+            duration: 12000,
+            panelClass: ["snack-notification"],
+            horizontalPosition: "center",
+            verticalPosition: "top"
+            });
+
             this.basketStore.dispatch(new fromBasketActions.RemoveAll());
             this.orderStore.dispatch(new fromOrderActions.Reset());
             return this.router.navigate(['/']);
@@ -66,12 +68,8 @@ export class OrdersEffects {
           map( q => {
               resOrders =  q.docs.map( 
                 doc => {
-                  console.info('doc.data()');
-                  console.dir(doc.data());
                   return doc.data();
                 })
-                console.info('resorderss');
-                console.dir(resOrders);
                 return new fromOrderActions.LoadComplete(resOrders);
             }),
           catchError(err => of(new fromOrderActions.LoadError('error in loading orders'))

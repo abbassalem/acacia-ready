@@ -18,8 +18,7 @@ import { reducer } from './reducers/orders.reducer';
     OrderComponentsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: '', component: OrderListPageComponent},
-      // { path: ':id', component: OrderViewDetailsComponent },
+      { path: '', component: OrderListPageComponent}
     ]),
     StoreModule.forFeature('orders', reducer ),
     EffectsModule.forFeature([OrdersEffects]),

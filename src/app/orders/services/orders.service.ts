@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order, DurationWithStatus} from '../../shop/models/order.model';
-import { AngularFirestore, DocumentData , DocumentReference, DocumentSnapshot, QuerySnapshot } 
+import { AngularFirestore, DocumentData , QuerySnapshot } 
         from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
@@ -24,14 +24,25 @@ export class OrderService {
     console.log('service => duration getOrders: ');
     console.dir(inputDurationWithStatus);
 
-       return this.db.collection('orders', 
-          ref => ref.where('userId', '==', userId)
+       if(inputDurationWithStatus.status == 'ALL'){
+          return this.db.collection('orders', 
+            ref => ref.where('userId', '==', userId)
+                  // .where('orderDate', '>=', inputDurationWithStatus.start)
+                  // .where('orderDate', '<=', inputDurationWithStatus.end)
+                  // .where('status', '==', inputDurationWithStatus.status)
+                  // .orderBy( "orderDate", "desc" )
+                  )
+            .get();
+       } else {
+        return this.db.collection('orders', 
+            ref => ref.where('userId', '==', userId)
                     // .where('orderDate', '>=', inputDurationWithStatus.start)
                     // .where('orderDate', '<=', inputDurationWithStatus.end)
                     .where('status', '==', inputDurationWithStatus.status)
                     // .orderBy( "orderDate", "desc" )
                     )
-       .get();
+            .get();
+       }
   }
 
   

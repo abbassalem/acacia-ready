@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { AddOrderItems } from '../../shop/actions/basket.actions';
 import { Order } from '../../shop/models/order.model';
@@ -16,7 +16,7 @@ import { ShopState } from '../../shop/reducers';
           &nbsp;&nbsp;&nbsp;&nbsp;Amount: <b>{{ amount | currency : 'EUR':'symbol':'1.2-2'}} </b>
           &nbsp;&nbsp;&nbsp;&nbsp;Delivery Date: <b>{{ deliveryDate | date: 'dd/MM/yyyy'}} </b>
           &nbsp;&nbsp;&nbsp;&nbsp;Delivery Time: <b>{{ deliveryTime }}</b>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paid&nbsp;<mat-checkbox width="20%" [checked]= "order.paid" [disabled]="true" color="accent" ></mat-checkbox>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paid:&nbsp;<mat-checkbox width="20%" [checked]= "order.paid" [disabled]="true" color="accent" ></mat-checkbox>
           &nbsp;
     </mat-expansion-panel-header>
     <mat-action-row>
@@ -83,6 +83,9 @@ import { ShopState } from '../../shop/reducers';
     .mat-spinner.show {
       opacity: 1.0;
     }
+    .mat-snack-bar-container {
+      margin-top: 50px !important;
+    }
   `,
   ],
 })
@@ -125,13 +128,6 @@ export class OrderViewComponent {
     return this.order.amount;
   }
 
-  get paid(){
-    // return this.order.paid?'Yes':'No'
-    return this.paid;
-  }
-
-  
-
   // get amount() {
 
     // return this.order.items.map(item => item.quantity * item.product.price).reduce((pre, current) => {
@@ -163,16 +159,17 @@ export class OrderViewComponent {
 
   addToBasket(message: string) {
     let snackBarRef: MatSnackBarRef<any>;
-    snackBarRef = this.snackBar.open(message);
-    // snackBarRef = this.snackBar.open(message, 'Undo');
+
+    snackBarRef = this.snackBar.open(message,'Close',{ 
+      duration: 12000,
+      panelClass: ["snack-notification"],
+      horizontalPosition: "center",
+      verticalPosition: "top"
+    });
+
     snackBarRef.afterDismissed().subscribe ( () => {
-      // console.log('executing the addOrderItems');
       this.store.dispatch(new AddOrderItems(this.order.items));
     });
-    // snackBarRef.onAction().subscribe ( () => {
-      // console.log('undoing addOrderItems');
-      // this.store.dispatch(new AddOrderItems(this.order.items));
-    // });
   }
 
   loadItems() {

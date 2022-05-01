@@ -87,11 +87,11 @@
                         <mat-icon>chevron_right</mat-icon>
                     </button>
                 </a>
-                <a *ngIf="(loggedIn$ | async)" style="padding-right: 5%">
+                <!-- <a *ngIf="(loggedIn$ | async)" style="padding-right: 5%">
                     <button mat-raised-button [disabled]="showSteps" color="accent" (click)="toggleShowSteps()">Order
                         <mat-icon>chevron_right</mat-icon>
                     </button>
-                </a>
+                </a> -->
             </td>
         </tr>
     </tfoot>
@@ -99,7 +99,7 @@
 <br>
 
 
-<div *ngIf="basketItems.length >0 && showSteps">
+<div *ngIf="basketItems.length >0  && (loggedIn$ | async)">
     <form [formGroup]="basketForm">
         <mat-card>
             <mat-card-content>
