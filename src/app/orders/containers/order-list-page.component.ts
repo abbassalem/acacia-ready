@@ -50,7 +50,6 @@ export class OrderListPageComponent implements OnInit {
       select(fromOrderReducer.getOrders),
       filter(value => value.length > 0),
       map( orders => {
-          console.dir(orders);
           return orders;
       })
     );

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -29,22 +29,22 @@ export class BasketEffects {
     }
   }
 
-  
-
-  @Effect()
-  addOrderItemsToBasket$: Observable<Action> = this.actions$.pipe(
-    ofType<fromBasketActions.AddOrderItems>(fromBasketActions.BasketActionTypes.AddOrderItems),
-    map(action => action.payload),
-    switchMap((basketItems: BasketItem[]) => {
-      basketItems.forEach(bi => this.products.push(bi));
-      // window.localStorage.setItem('products', JSON.stringify(this.products));
-      return of(new fromBasketActions.AddOrderItemsComplete(basketItems));
-    }
-    )
+  addOrderItemsToBasket$: Observable<Action> = createEffect( () => {
+    return this.actions$.pipe(
+        ofType<fromBasketActions.AddOrderItems>(fromBasketActions.BasketActionTypes.AddOrderItems),
+        map(action => action.payload),
+        switchMap((basketItems: BasketItem[]) => {
+          basketItems.forEach(bi => this.products.push(bi));
+          // window.localStorage.setItem('products', JSON.stringify(this.products));
+          return of(new fromBasketActions.AddOrderItemsComplete(basketItems));
+        })
+    )}, {dispatch: true}
   );
 
-  @Effect({dispatch: true})
-  addProductToBasket$: Observable<Action> = this.actions$.pipe(
+
+
+  addProductToBasket$: Observable<Action> = createEffect( () => {
+    return this.actions$.pipe(
     ofType<fromBasketActions.AddBasketItem>(fromBasketActions.BasketActionTypes.AddBasketItem),
     map(action => action.payload),
     switchMap((basketItem: BasketItem) => {
@@ -56,52 +56,34 @@ export class BasketEffects {
         }
         // window.localStorage.setItem('products', JSON.stringify(this.products));
         return of(new fromBasketActions.AddBasketItemComplete(basketItem));
-    }
-    )
-  );
+    })
+  )
+  }, {dispatch: true});
 
-//  @Effect({dispatch: false})
-//  addBasketItemComplete$: Observable<Action> = this.actions$.pipe(
-//     ofType<fromBasketActions.AddBasketItemComplete>(fromBasketActions.BasketActionTypes.AddBasketItemComplete),
-//     switchMap((action: Action) => {
-//     }
-//     )
-//   );
+  removeProductFromBasket$: Observable<Action> = createEffect( ()=> {
+    return this.actions$.pipe(
+      ofType<fromBasketActions.RemoveBasketItem>(fromBasketActions.BasketActionTypes.RemoveBasketItem),
+      map(action => action.payload),
+      switchMap((id: number) => {
+        const index = this.products.findIndex(product => product.id === id);
+        window.localStorage.removeItem('products');
+        this.products.splice(index, 1);
+        // window.localStorage.setItem('products', JSON.stringify(this.products));
+        return of(new fromBasketActions.RemoveBasketItemComplete(id));
+      })
+    )}, {dispatch: true})
 
-  @Effect()
-  removeProductFromBasket$: Observable<Action> = this.actions$.pipe(
-    ofType<fromBasketActions.RemoveBasketItem>(fromBasketActions.BasketActionTypes.RemoveBasketItem),
-    map(action => action.payload),
-    switchMap((id: number) => {
-      const index = this.products.findIndex(product => product.id === id);
-      window.localStorage.removeItem('products');
-      this.products.splice(index, 1);
-      // window.localStorage.setItem('products', JSON.stringify(this.products));
-      return of(new fromBasketActions.RemoveBasketItemComplete(id));
-    }
-    )
-  );
-
-  @Effect()
-  updateBasketItem$: Observable<Action> = this.actions$.pipe(
-    ofType<fromBasketActions.UpdateBasketItem>(fromBasketActions.BasketActionTypes.UpdateBasketItem),
-    map(action => action.payload),
-    switchMap((basketItem: BasketItem) => {
-      const index = this.products.findIndex(product => product.id === basketItem.id);
-      window.localStorage.removeItem('products');
-      this.products[index] = basketItem;
-      // window.localStorage.setItem('products', JSON.stringify(this.products));
-      return of(new fromBasketActions.UpdateBasketItemComplete(basketItem));
-    }
-    )
-  );
-
-  // @Effect({dispatch: false})
-  // removeAll$: Observable<Action> = this.actions$.pipe(
-  //   ofType<fromBasketActions.RemoveAll>(fromBasketActions.BasketActionTypes.RemoveAll),
-  //   tap( () => {
-  //     //this.router.navigate(['/']);
-  //   })
-  // );
+    updateBasketItem$: Observable<Action> = createEffect( () => {
+      return this.actions$.pipe(
+        ofType<fromBasketActions.UpdateBasketItem>(fromBasketActions.BasketActionTypes.UpdateBasketItem),
+        map(action => action.payload),
+        switchMap((basketItem: BasketItem) => {
+          const index = this.products.findIndex(product => product.id === basketItem.id);
+          //window.localStorage.removeItem('products');
+          this.products[index] = basketItem;
+          // window.localStorage.setItem('products', JSON.stringify(this.products));
+          return of(new fromBasketActions.UpdateBasketItemComplete(basketItem));
+        })
+      )}, {dispatch: true});
 
 }

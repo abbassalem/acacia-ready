@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from '../../auth/models/user';
@@ -47,8 +46,7 @@ export class BasketComponent implements OnInit {
   constructor(private store: Store<OrderState>,
               private location: Location,
               private fb: FormBuilder,
-              private authStore: Store<fromAuth.State>,
-              private snakBar: MatSnackBar ) {
+              private authStore: Store<fromAuth.State> ) {
   }
 
   ngOnInit() {

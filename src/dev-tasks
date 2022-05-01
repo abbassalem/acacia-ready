@@ -1,3 +1,9 @@
 - refactor @effects to use createEffect method
 - create admin to cancel, take order etc..
 - enrich account page
+- localstorage implementation
+
+
+
+ng config cli.defaultCollection @ngrx/schematics
+ng generate entity --name Lesson --module courses/courses.module.ts

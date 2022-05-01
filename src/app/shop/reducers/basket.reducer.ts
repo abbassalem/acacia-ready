@@ -58,8 +58,7 @@ export function reducer(state = initialState, action: BasketActionsUnion): Baske
     }
 
     case BasketActionTypes.UpdateBasketItemComplete: {
-      const basketItem = state.entities[action.payload.id];
-      return adapter.updateOne({ id: action.payload.id, changes: basketItem }, state);
+      return adapter.updateOne({ id: action.payload.id, changes: action.payload }, state);
     }
     default: {
       return state;

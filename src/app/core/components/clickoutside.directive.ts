@@ -10,9 +10,6 @@ export class ClickOutside  {
 
   @HostListener('body:click', ['$event'])
   private onClickBody(event) {
-    event.preventDefault();
-    console.log('onClickBody => event');
-    console.dir(event);
     if (!this.isClickInElement(event)) {
         this.clickOutside.emit(event);
     }

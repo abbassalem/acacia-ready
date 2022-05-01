@@ -161,7 +161,7 @@ export class OrderViewComponent {
     let snackBarRef: MatSnackBarRef<any>;
 
     snackBarRef = this.snackBar.open(message,'Close',{ 
-      duration: 12000,
+      duration: 4000,
       panelClass: ["snack-notification"],
       horizontalPosition: "center",
       verticalPosition: "top"

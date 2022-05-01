@@ -83,8 +83,6 @@ export const getIds = createSelector(selectOrderState, (state: OrderState) => st
 export const getOrders = createSelector(getEntities, getIds, (entities, ids) => {
   let orders: Array<Order> = new Array<Order>();
   for (let id of ids) {
-    console.dir(entities[id].orderDate);
-    
     orders.push(entities[id]);
   }
   return orders;
