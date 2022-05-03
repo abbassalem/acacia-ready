@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { AddOrderItems } from '../../shop/actions/basket.actions';
 import { Order } from '../../shop/models/order.model';
@@ -35,7 +35,7 @@ import { ShopState } from '../../shop/reducers';
 
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{element.price | number : '1.0-0'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.price | number : '1.2-2'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="quantity">
@@ -128,14 +128,6 @@ export class OrderViewComponent {
     return this.order.amount;
   }
 
-  // get amount() {
-
-    // return this.order.items.map(item => item.quantity * item.product.price).reduce((pre, current) => {
-    //   const total = pre + current;
-    //   return total;
-    // }, 0);
-  // }
-
   get thumbnail() {
     let img;
     switch (this.status) {
@@ -167,9 +159,9 @@ export class OrderViewComponent {
       verticalPosition: "top"
     });
 
-    snackBarRef.afterDismissed().subscribe ( () => {
-      this.store.dispatch(new AddOrderItems(this.order.items));
-    });
+    // snackBarRef.afterDismissed().subscribe ( () => {
+    this.store.dispatch(new AddOrderItems(this.order.items));
+    // });
   }
 
   loadItems() {

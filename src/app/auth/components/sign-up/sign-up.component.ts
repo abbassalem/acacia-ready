@@ -1,7 +1,7 @@
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-// import ComparePassword from 'src/app/shared/validators/comparePassword.validator';
 import * as fromAuth from './../../../auth/reducers/auth.reducer';
 import * as fromAuthAction from './../../actions/auth.actions';
 
@@ -16,22 +16,20 @@ export class SignUpComponent implements OnInit {
   registerForm: FormGroup;
   
   constructor(private store: Store<fromAuth.State>) {
+  }
+  
+  ngOnInit(){  
     this.registerForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [ Validators.required]),
       passwordRetype: new FormControl('', Validators.required),
       fullName: new FormControl('', Validators.required),
       phoneNumber: new FormControl('', Validators.required)
+    },
+    { 
+      validators: [this.checkPasswords, this.minLengthCheck]
     }
-    // {
-    //   validator: ComparePassword('password', 'passswordVerification')
-    // }
-  );
-  }
-  
-  ngOnInit(){
-
-    
+    );  
   }
 
   register(){
@@ -45,12 +43,21 @@ export class SignUpComponent implements OnInit {
       }   
     ));
   }
-  
 
-  // loginWithProvider(providerName){
-  //   this.providerSubmission.emit(providerName);
-  // }
-
-  
+  checkPasswords(group: FormGroup) {
+    const pass = group.controls['password'].value;
+    const confirmPass = group.controls['passwordRetype'].value;
+    return pass === confirmPass ? null : { notSame: true };
+  }
+    
+  minLengthCheck (group: FormGroup){
+    const pass = <string>group.controls['password'].value;
+    if(pass.length <6){
+      return {minLength: true}
+    } else {
+      return null;
+    }
+  }
 
 }
+

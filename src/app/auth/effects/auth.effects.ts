@@ -11,6 +11,7 @@ import { Reset } from '../../orders/actions/orders.actions';
 import { OrderState } from '../../orders/reducers/orders.reducer';
 import { Store } from '@ngrx/store';
 import { AuthProvider, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class AuthEffects {
@@ -19,10 +20,10 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
     private location: Location,
     private orderStore: Store<OrderState>,
     private basketStore: Store<BasketState>,
+    private snackBar: MatSnackBar
   ) {}
 
 
@@ -55,14 +56,23 @@ export class AuthEffects {
           )
         )
       )
-    }, { dispatch: false });
+    }, { dispatch: true });
 
   SignupSuccess$ = createEffect( () => {
     return this.actions$.pipe(
       ofType<fromAuthActions.SignupComplete>(fromAuthActions.AuthActionTypes.SignupComplete),
-      tap(() => {this.router.navigate(['/shop'])})
+      tap(() => {
+        this.snackBar.open('Please check your email for verification','Close',{ 
+          duration: 7000,
+          panelClass: ["snack-notification"],
+          horizontalPosition: "center",
+          verticalPosition: "top"
+        });
+        // this.router.navigate(['/shop']);
+
+      })
     );
-  })
+  }, {dispatch: false})
 
   login$ = createEffect( () => {
     return this.actions$.pipe(

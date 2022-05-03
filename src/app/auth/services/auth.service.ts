@@ -51,7 +51,6 @@ export class AuthService {
       .then((result) => {
         this.SendVerificationMail();
         this.SetUserData(result.user, extraData);
-        
       })
       .catch((error) => {
         window.alert(error.message);
@@ -62,7 +61,7 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['email-verification']);
+        this.router.navigate(['/shop']);
       });
   }
 

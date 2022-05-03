@@ -1,56 +1,64 @@
 
- 
-<mat-card>
-  <mat-card-subtitle>Register User</mat-card-subtitle>
-  <mat-card-header>
-  </mat-card-header>
-  
-  <mat-card-content>
+  <mat-card style="padding-left: 200px" >
+    <!-- <mat-card-subtitle>Register User</mat-card-subtitle> -->
+    <mat-card-header><strong>Register new User</strong> 
+    </mat-card-header>
+    <br>
     
-    <form [formGroup]="registerForm" novalidate>
-      <p>
-        <mat-form-field>
-          <input type="text" matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
-      </p>
+    <mat-card-content>
+      
+      <form [formGroup]="registerForm" style="width:fit-content">
+        <p>
+          <mat-form-field class="formfield-full-width">
+            <input type="text" matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </p>
 
-      <p>
-        <mat-form-field>
-          <input type="password" matInput placeholder="Password" formControlName="password">
-        </mat-form-field>
-      </p>
+        <p>
+          <mat-form-field class="formfield-full-width">
+            <input type="text" matInput placeholder="Password" 
+              (keyup)="minLengthCheck(registerForm)" formControlName="password">
+          </mat-form-field>
+          <mat-error *ngIf="registerForm.controls['password'].touched"> 
+            <!-- <div *ngIf="registerForm.controls['password'].hasError('required')"><strong>Password is required.</strong></div> -->
+            <div *ngIf="registerForm.hasError('minLength')">
+              <strong>Password must be at least 6 characters.</strong></div>
+        </mat-error>
+        </p>
+        
+        <p>
+          <mat-form-field class="formfield-full-width">
+            <input type="text" matInput placeholder="Retype password" width="100%" (keyup)="checkPasswords(registerForm)" formControlName="passwordRetype">
+          </mat-form-field>
+          
+          <mat-error *ngIf="registerForm.controls['passwordRetype'].touched" > 
+            <!-- && registerForm.controls['passwordRetype'].invalid" class="alert alert-danger"> -->
+            <!-- <div *ngIf="registerForm.hasError('required')"><strong>Password is required.</strong></div> -->
+            <div *ngIf="registerForm.hasError('notSame')">
+              <strong>Password and Confirm Password must be match.</strong></div>
+          </mat-error>
+        </p>
 
-      <p>
-        <mat-form-field>
-          <input type="password" matInput placeholder="Retype password" formControlName="passwordRetype">
-        </mat-form-field>
-      </p>
+        <p>
+          <mat-form-field class="formfield-full-width">
+            <input type="text" matInput placeholder="Phone number" formControlName="phoneNumber" >
+          </mat-form-field>
+        </p>
 
-      <p>
-        <mat-form-field>
-          <input type="text" matInput placeholder="Phone number" formControlName="phoneNumber">
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field>
-          <input type="text" matInput placeholder="Full name" formControlName="fullName">
-        </mat-form-field>
-      </p>
-
-  </form>
+        <p>
+          <mat-form-field class="formfield-full-width">
+            <input type="text" matInput placeholder="Full name" formControlName="fullName">
+          </mat-form-field>
+        </p>
+      </form>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-fab  mat-button type="button" (click)="register()" [disabled]="!registerForm.valid"> Register</button>
+      <button type="button" mat-button routerLink="/shop">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
   
-  </mat-card-content>
-
-  <mat-card-footer>
-    <!-- <button mat-fab  mat-button type="button" 
-       (click)="register()"> Register</button>
-    <button style="float:right" type="button" mat-button>Cancel</button> -->
-  </mat-card-footer>
-</mat-card>
-<button mat-fab  mat-button type="button" 
-(click)="register()"> Register</button>
-<button type="button" mat-button>Cancel</button>
 
 
       
