@@ -7,3 +7,7 @@
 
 ng config cli.defaultCollection @ngrx/schematics
 ng generate entity --name Lesson --module courses/courses.module.ts
+
+
+hat's because the firebase core library does not include the firestore library innately. To fix you problem:
+import 'firebase/firestore';

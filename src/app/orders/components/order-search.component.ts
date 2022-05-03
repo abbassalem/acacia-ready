@@ -1,6 +1,5 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OpenSidenav } from 'src/app/core/actions/layout.actions';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DurationWithStatus } from 'src/app/shop/models/order.model';
 
 @Component({

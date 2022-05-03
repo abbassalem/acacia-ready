@@ -1,24 +1,16 @@
 import * as fromRouter from '@ngrx/router-store';
 import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
 
-/**
- * Every reducer module's default export is the reducer function itself. In
- * addition, each module should export a type or interface that describes
- * the state of the reducer plus any selector functions. The `* as`
- * notation packages up all of the exports into a single object.
- */
-import * as fromLayout from '../core/reducers/layout.reducer';
 import * as fromConfig from '../core/reducers/configuration.reducer';
 import * as fromAuth from '../auth/reducers/auth.reducer';
-// import * as fromOrder from '../orders/reducers/orders.reducer';
 import { RouterStateUrl } from '../shared/utils';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
+
 export interface State {
-  layout: fromLayout.State;
   config: fromConfig.State;
   auth: fromAuth.State;
   router: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -30,7 +22,6 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  layout: fromLayout.reducer,
   config: fromConfig.reducer,
   router: fromRouter.routerReducer,
   auth: fromAuth.reducer
@@ -54,17 +45,8 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] = [logger];
 //  !environment.production  ? [logger, storeFreeze]: [];
 
-/**
- * Layout Reducers
- */
-export const getLayoutState = createFeatureSelector<fromLayout.State>('layout');
 export const getConfigState = createFeatureSelector<fromConfig.State>('config');
 export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
-
-export const getShowSidenav = createSelector(
-  getLayoutState,
-  fromLayout.getShowSidenav
-);
 
 export const getDeliveryTimes = createSelector(
   getConfigState,
