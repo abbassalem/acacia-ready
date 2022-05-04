@@ -19,12 +19,12 @@ import { Product } from '../models/product.model';
           <span style="font-size: 11px" [innerHtml]="description"> </span>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="warn" *ngIf="inBasket" (click)="remove.emit(product)">
+        <button *ngIf="inBasket" mat-raised-button color="warn"  (click)="remove.emit(product)">
             Remove from Basket
             <mat-icon>cancel</mat-icon>
         </button>
         <p  *ngIf="valid">
-            <button mat-raised-button color="primary" *ngIf="!inBasket" (click)="add.emit(product)">
+            <button *ngIf="!inBasket" mat-raised-button color="primary"  (click)="add.emit(product)">
                 Add to Basket
                 <mat-icon>loupe</mat-icon>
             </button>

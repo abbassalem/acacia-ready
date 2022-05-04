@@ -5,12 +5,12 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
 @Component({
   selector: 'app-order-list',
   template: `
-  <mat-card>
+
   <app-order-search (searchWithDates)= "propagateSearch($event)"></app-order-search>
   <mat-accordion  style="width: 100%;">
     <app-order-view  *ngFor="let orderElement of orders" [order]="orderElement"> </app-order-view>
   </mat-accordion>
-  </mat-card>
+
   
 `,
   styles: [

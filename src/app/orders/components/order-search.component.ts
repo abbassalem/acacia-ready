@@ -8,9 +8,14 @@ import { DurationWithStatus } from 'src/app/shop/models/order.model';
   <br>
   <form [formGroup]="searchGroup">
     <mat-card>
-      <mat-card-subtitle><small><b>Search order</b></small></mat-card-subtitle>
-        <mat-card-content>
-            <mat-form-field>
+      <mat-card-header>
+          <mat-card-subtitle><strong style="color:blue">List & Search Orders </strong></mat-card-subtitle>
+        <img mat-card-avatar src="assets/icon/order1.png">
+      
+      </mat-card-header>  
+<hr><br>
+      <mat-card-content>
+            <!-- <mat-form-field>
                   <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
                   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                   <mat-datepicker #picker1></mat-datepicker>
@@ -19,11 +24,11 @@ import { DurationWithStatus } from 'src/app/shop/models/order.model';
                   <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
+            </mat-form-field> -->
               
             <mat-form-field>
-                  <mat-select formControlName="orderStatus">
-                    <mat-option *ngFor= "let status of statusList" [value]="status.value" 
+                  <mat-select formControlName="orderStatus" matInput placeholder="Order Status">
+                    <mat-option *ngFor= "let status of statusList" [value]="status.value"  
                       [selected]="status.isSelected">{{status.label}}
                     </mat-option>
                   </mat-select>
@@ -45,6 +50,7 @@ import { DurationWithStatus } from 'src/app/shop/models/order.model';
     mat-card-footer {
       display: flex;
       justify-content: center;
+      min-width: 50%;
     }
 
     mat-card-footer {

@@ -41,8 +41,6 @@ export class BasketEffects {
     )}, {dispatch: true}
   );
 
-
-
   addProductToBasket$: Observable<Action> = createEffect( () => {
     return this.actions$.pipe(
     ofType<fromBasketActions.AddBasketItem>(fromBasketActions.BasketActionTypes.AddBasketItem),
