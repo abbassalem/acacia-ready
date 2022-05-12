@@ -110,9 +110,9 @@ export class BasketComponent implements OnInit {
       .reduce((acc, val) => acc + val, 0);
   }
 
-  toggleShowSteps() {
-    this.showSteps = !this.showSteps;
-  }
+  // toggleShowSteps() {
+  //   this.showSteps = !this.showSteps;
+  // }
 
   modify(index: number) {
     if (this.edit) {
@@ -136,7 +136,9 @@ export class BasketComponent implements OnInit {
     this.showSteps = false;
   }
 
-  save() {
+  saveBasketItem() {
+
+    this.showSteps = true;
     switch (this.operation) {
       case OperationType.EDIT: {
         const clone = Object.assign({}, this.basketItems[this.selectedIndex]);
@@ -150,7 +152,7 @@ export class BasketComponent implements OnInit {
           .RemoveBasketItem(this.basketItems[this.selectedIndex].id));
         break;
       }
-      this.showSteps = true;
+    
     }
 
     this.selectedIndex = -1;
