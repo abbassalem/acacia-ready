@@ -1,24 +1,27 @@
 <span style="padding-left: 80px" *ngIf="basketItems && basketItems.length === 0">Empty basket</span>
 <table *ngIf="basketItems && basketItems.length >0">
     <thead>
-        <tr style="color:grey; background-color: white">
+        <tr style="color:grey;">
             <th colspan="8" class="footer">
                 <span style="color: darkblue"> Basket Item List</span>
             </th>
         </tr>
         <tr style="color:grey;">
             <th>#</th>
-            <th *ngFor="let col of columns" class="mat-table" style="font-size: 12px;"> {{col.label}}</th>
-            <th colspan="2" class="mat-table" style="font-size: 12px;" *ngIf="!showSteps">
-                <span *ngIf="operation === 'EDIT'" class="active">Editing</span>
-                <span *ngIf="operation === 'DELETE'" class="active">Deleting</span>
+            <th *ngFor="let col of columns"> {{col.label}}</th>
+            
+            <th colspan="3" >
+                <span *ngIf="operation === 'EDIT'" class="in-operation">Editing ... Please confirm</span>
+                <span *ngIf="operation === 'DELETE'" class="in-operation">Deleting ... Please confirm</span>
             </th>
+            <!-- <th colspan="2"> </th> -->
+            
         </tr>
     </thead>
 
     <tbody>
         <tr *ngFor="let item of basketItems;let i=index;" [ngClass]="{'even':i%2===0, 'odd':i%2 !== 0}"
-            [ngStyle]="{'color': (operation === 'DELETE' || operation === 'EDIT') && i=== selectedIndex ?'black':'gray'}">
+            [ngStyle]="{'color': (operation === 'DELETE' || operation === 'EDIT') && i=== selectedIndex ?'black':'grey'}">
             <td class="mat-header-cell"> {{i+1}} </td>
             <td class="mat-header-cell"> {{item.product.name}} </td>
             <td class="mat-header-cell"> {{item.product.description}} </td>
@@ -42,29 +45,35 @@
                 </span>
             </td>
 
-            <td class="mat-header-cell" *ngIf="selectedIndex !== i && !showSteps">
-                <span class="hand" (click)="modify(i)">
+            <td class="mat-header-cell" *ngIf="selectedIndex !== i">
+                <button  mat-flat-button class="hand" (click)="modify(i)">
                     <mat-icon>edit</mat-icon>
-                </span>
+                </button>
 
             </td>
-            <td class="mat-header-cell" *ngIf="selectedIndex !== i && !showSteps">
-                <span class="hand" (click)="delete(i)">
+            <td class="mat-header-cell" *ngIf="selectedIndex !== i">
+                <button  mat-flat-button class="hand" (click)="delete(i)">
                     <mat-icon>delete_forever</mat-icon>
-                </span>
+                </button>
             </td>
 
-            <td class="mat-header-cell"
+            <td class="mat-header-cell" 
                 *ngIf="(operation === 'EDIT' || operation === 'DELETE')  && selectedIndex === i">
-                <span class="hand" (click)="saveBasketItem()">
+                <button color="accent" mat-flat-button  (click)="saveBasketItem()">
                     <mat-icon>check_circle</mat-icon>
-                </span>
+                </button>
+               
             </td>
-            <td class="mat-header-cell" *ngIf="(operation === 'EDIT' || operation === 'DELETE') && selectedIndex === i">
-                <span class="hand" (click)="cancel()">
+            <td  class="mat-header-cell" *ngIf="(operation === 'EDIT' || operation === 'DELETE') && selectedIndex === i">
+                <button color="accent" mat-flat-button  (click)="cancel()">
                     <mat-icon>cancel</mat-icon>
-                </span>
+                </button>
             </td>
+            <!-- <td  class="mat-header-cell" *ngIf="(operation === 'EDIT' || operation === 'DELETE') && selectedIndex === i">
+                <mat-error *ngIf="!showSteps && operation === 'EDIT'">Please confirm  EDIT</mat-error>
+                <mat-error *ngIf="!showSteps && operation === 'DELETE'"> Please confirm DELETE</mat-error>
+            </td> -->
+            <td></td>
         </tr>
     </tbody>
     <tfoot *ngIf="basketItems && basketItems.length >0">
@@ -77,8 +86,8 @@
             <td class="footer"></td>
             <td class="footer"></td>
             <td class="footer">
-                <mat-error *ngIf="!showSteps && operation === 'EDIT'">Please confirm operation EDIT</mat-error>
-                <mat-error *ngIf="!showSteps && operation === 'DELETE'"> Please confirm opertion DELETE</mat-error></td>
+                <!-- <mat-error *ngIf="!showSteps && operation === 'EDIT'">Please confirm  EDIT</mat-error>
+                <mat-error *ngIf="!showSteps && operation === 'DELETE'"> Please confirm DELETE</mat-error></td> -->
             <td class="footer"></td>
             <td class="footer"> £ {{getTotal() | number : '1.2-2'}}</td>
             <td class="footer"></td>

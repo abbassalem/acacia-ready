@@ -96,6 +96,7 @@ export class BasketComponent implements OnInit {
         amount: this.getTotal()
       };
       this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
+      // this.showSteps 
   }
 
   getTotal() {
@@ -138,7 +139,7 @@ export class BasketComponent implements OnInit {
 
   saveBasketItem() {
 
-    this.showSteps = true;
+    // this.showSteps = true;
     switch (this.operation) {
       case OperationType.EDIT: {
         const clone = Object.assign({}, this.basketItems[this.selectedIndex]);
