@@ -123,6 +123,7 @@ export class BasketComponent implements OnInit {
     this.edit = true;
     this.selectedIndex = index;
     this.quantityControl.setValue(this.basketItems[index].quantity);
+    this.showSteps = false;
   }
 
   delete(index: number) {
@@ -132,6 +133,7 @@ export class BasketComponent implements OnInit {
     this.operation = OperationType.DELETE;
     this.edit = true;
     this.selectedIndex = index;
+    this.showSteps = false;
   }
 
   save() {
@@ -148,6 +150,7 @@ export class BasketComponent implements OnInit {
           .RemoveBasketItem(this.basketItems[this.selectedIndex].id));
         break;
       }
+      this.showSteps = true;
     }
 
     this.selectedIndex = -1;
