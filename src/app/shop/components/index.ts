@@ -7,7 +7,7 @@ import { PipesModule } from '../../shared/pipes';
 import { ProductDetailComponent } from './product-selected.component';
 import { ProductListComponent } from './product-list.component';
 import { ProductViewComponent } from './product-view.component';
-import { ProductSearchComponent } from './product-search.component';
+import { ProductSearchComponent } from './OLD-product-search.component';
 import { BasketComponent } from './basket.component';
 
 

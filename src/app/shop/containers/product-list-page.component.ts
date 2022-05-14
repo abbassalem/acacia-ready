@@ -43,10 +43,7 @@ export class ProductListPageComponent implements OnInit {
 
   routeLinks: Array<{catId: number, label: string, path: string}> = new Array();
   categories$: Observable<Category[]>;
-  selectedCategoryId$: Observable<number>;
   basketItems$: Observable<BasketItem[]>;
-  // loading$: Observable<boolean>;
-  // error$: Observable<string>;
 
   constructor(private store: Store<fromCategories.CategoryState>) {
     this.categories$ = this.store.pipe(select(index.getAllCategories));
@@ -69,3 +66,4 @@ export class ProductListPageComponent implements OnInit {
     this.basketItems$ = this.store.pipe(select(index.getAllBasketItems));
   }  
 }
+  

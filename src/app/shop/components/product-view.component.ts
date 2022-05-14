@@ -7,14 +7,15 @@ import { Product } from '../models/product.model';
     <a [routerLink]="['/shop/products', id, {queryParams: {quantity:quantity}}]">
       <mat-card>
         <mat-card-title-group>
+        <div style="float:left" *ngIf="quantity > 0">
+          <span  [matBadge]="quantity" style="font-size:10px" matBadgeOverlap="true"></span>
+        </div>
           <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
           <mat-card-title class="product-title" >{{ name }}</mat-card-title>
         </mat-card-title-group>
         
         <mat-card-footer align="end">
-        <p style="float:left" *ngIf="quantity > 0">
-          <span  [matBadge]="quantity" style="font-size:10px" matBadgeOverlap="true"></span>
-        </p>
+       
           <p class="price">£ {{ price | number : '1.2-2'}} </p>
           <p class="description" *ngIf="description">{{ description }}</p>
         </mat-card-footer>

@@ -10,13 +10,15 @@ import { Product } from '../models/product.model';
         <span style="float: right" *ngIf="quantity > 0">
            <span matBadge="{{quantity}}" matBadgeOverlap="false"></span>
       </span>
-      <span>{{ name }}
+     
+      <span>{{ name }}   
            <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
       </span> 
        
       </mat-card-title>
       <mat-card-content> 
-          <span style="font-size: 11px" [innerHtml]="description"> </span>
+            <span style="font-size: 11px" [innerHtml]="description"> </span>
+            &nbsp;&nbsp;<span class="price">£ {{ price | number : '1.2-2'}} </span>
       </mat-card-content>
       <mat-card-actions>
         <button *ngIf="inBasket" mat-raised-button color="warn"  (click)="remove.emit(product)">
@@ -83,6 +85,10 @@ export class ProductDetailComponent {
 
   get name() {
     return this.product.name;
+  }
+
+  get price() {
+    return this.product.id;
   }
 
   get description() {

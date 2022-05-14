@@ -7,8 +7,6 @@ import { StoreModule } from '@ngrx/store';
 import { BasketService } from '../core/services/basket.service';
 import { ProductService } from '../core/services/product.service';
 import { MaterialModule } from '../material';
-import { OrdersEffects } from '../orders/effects/orders.effects';
-import { OrderService } from '../orders/services/orders.service';
 import { ProductsComponentsModule } from './components';
 import { BasketPageComponent } from './containers/basket-page.component';
 import { ProductListPageComponent } from './containers/product-list-page.component';

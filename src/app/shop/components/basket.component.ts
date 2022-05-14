@@ -96,7 +96,6 @@ export class BasketComponent implements OnInit {
         amount: this.getTotal()
       };
       this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
-      // this.showSteps 
   }
 
   getTotal() {

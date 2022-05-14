@@ -14,13 +14,14 @@ import { BasketItem } from '../models/BasketItem.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <mat-card *ngIf="product">
-    <mat-card-actions align="center" *ngIf="!(isSelectedProductInBasket$ | async)">
+    <mat-card-actions  *ngIf="!(isSelectedProductInBasket$ | async)">
+          
           <mat-form-field>
-              <input #qty [formControl]="quantityFormControl" type="number" [value]="0"
+              <input #qty [formControl]="quantityFormControl" type="number" [value]="'0'"
                     matInput placeholder="Quantity" min="1" max="100" required>
           </mat-form-field>
         &nbsp;
-        <p class="price">£ <b>{{qty.value * product.price | number : '1.2-2'}}</b></p>
+        <span class="price">£ <b>{{qty.value * product.price | number : '1.2-2'}}</b></span>
     </mat-card-actions>
   <mat-card-content>
         <app-product-detail
@@ -32,13 +33,14 @@ import { BasketItem } from '../models/BasketItem.model';
           (remove)="removeFromBasket($event)">
         </app-product-detail>
     </mat-card-content>
-    <mat-card-footer>
-    <p style="padding:5px;margin:5px">
-           <button mat-raised-button  (click)="back()">
-             Cancel <mat-icon>close</mat-icon>
-           </button>
-    </p>
-  </mat-card-footer>
+    <mat-action-row>
+      <button mat-raised-button  (click)="back()">
+              Cancel <mat-icon>close</mat-icon>
+            </button>
+    </mat-action-row>
+    <!-- <pstyle="padding:5px;margin:5px"> -->
+       
+    
 </mat-card>
   `,
   styles: [`
