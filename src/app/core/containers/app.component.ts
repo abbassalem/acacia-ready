@@ -46,7 +46,7 @@ import * as AuthActions from '../../auth/actions/auth.actions';
 
       <div style="flex: 1 1 auto;flex-direction: row">
           <span class="login" *ngIf="loggedIn$ | async">
-              <span style="color:white">LoggedIn as: </span> <b>{{(user$ | async)?.displayName}}</b>
+              <span style="color:white">Logged as: </span> <b>{{(user$ | async)?.displayName}}</b>
               <!-- <span style="color:white">LoggedIn as: </span> <b>{{(user$ | async)?.firstName + ' ' + (user$ | async)?.lastName}}</b> -->
           </span>
         </div>
