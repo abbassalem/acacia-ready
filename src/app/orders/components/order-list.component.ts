@@ -50,7 +50,7 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
   ]
 })
 
-export class OrderListComponent {
+export class OrderListComponent implements OnChanges{
 
   @Input() orderList: Order[];
   @ViewChild(AgGridAngular) agGrid: AgGridAngular;
@@ -103,6 +103,10 @@ export class OrderListComponent {
 
   constructor() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+       console.log('changes');
+       console.dir(changes['orderList']);
+  }
   dateFormatter(date): string {
     let str = new Date(date).getDate().toString() + '/' + 
     new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
