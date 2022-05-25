@@ -1,47 +1,41 @@
-import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DurationWithStatus } from 'src/app/shop/models/order.model';
+import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
 
 @Component({
   selector: 'app-order-search',
   template: `
-  <br>
-  <form [formGroup]="searchGroup">
-    <mat-card>
-      <mat-card-header>
-          <mat-card-subtitle><strong style="color:blue">List & Search Orders </strong></mat-card-subtitle>
-        <img mat-card-avatar src="assets/icon/order1.png">
-      
-      </mat-card-header>  
-<hr><br>
-      <mat-card-content>
-            <!-- <mat-form-field>
+    <form [formGroup]="searchGroup">
+  <mat-card>
+    <mat-card-title style="text-align:start  ;"><small><b>Search order</b></small></mat-card-title>
+    <mat-card-content>
+              <button style="align-content: flex-start;" mat-flat-button color="accent" 
+                  [disabled]="!searchGroup.valid" (click) = "executeSearch()">
+                <mat-icon>search</mat-icon>Search
+            </button>
+            &nbsp;&nbsp;
+            <mat-form-field style="max-width: fit-content;">
                   <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
                   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                   <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field style="max-width: fit-content;">
                   <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field> -->
-              
+            </mat-form-field>
+            
             <mat-form-field>
-                  <mat-select formControlName="orderStatus" matInput placeholder="Order Status">
-                    <mat-option *ngFor= "let status of statusList" [value]="status.value"  
+                  <mat-select formControlName="orderStatus">
+                    <mat-option *ngFor= "let status of statusList" [value]="status.value" 
                       [selected]="status.isSelected">{{status.label}}
                     </mat-option>
                   </mat-select>
             </mat-form-field>
-
-            <mat-spinner [class.show]="searching" [diameter]="30" [strokeWidth]="3"></mat-spinner>
-            <button mat-raised-button color="accent" [disabled]="!searchGroup.valid" (click) = "executeSearch()">
-                <mat-icon>search</mat-icon>Search
-            </button>
-        
-        </mat-card-content>
-  </mat-card>
-</form>
+          </mat-card-content>
+        </mat-card>
+      </form>
+  <br><br>
   `,
   styles: [
     `
@@ -50,7 +44,6 @@ import { DurationWithStatus } from 'src/app/shop/models/order.model';
     mat-card-footer {
       display: flex;
       justify-content: center;
-      min-width: 50%;
     }
 
     mat-card-footer {
@@ -80,7 +73,8 @@ export class OrderSearchComponent implements OnInit {
   @Input() query = '';
   @Input() searching = false;
   @Input() error = '';
-  @Output() searchWithDates = new EventEmitter<DurationWithStatus>();
+  @Output() searchCriteriaChange = new EventEmitter<OrderSearchCriteria>();
+
   searchGroup: FormGroup;
   statusList: Status[] = [];
 
@@ -95,18 +89,9 @@ export class OrderSearchComponent implements OnInit {
         endDate: new FormControl(new Date(), [Validators.required]),
         orderStatus: new FormControl('OPEN')
       }
-    );
+    );   
   }
-
-  executeSearch() {
-    let durationWithStatus: DurationWithStatus = {
-      start: this.searchGroup.get('startDate').value.getTime(),
-      end: this.searchGroup.get('endDate').value.getTime(),
-      status: this.searchGroup.get('orderStatus').value
-    };
-    this.searchWithDates.emit(durationWithStatus);
-  }
-
+   
   initilizeStatusList(){
     this.statusList.push({value: 'ALL', label: 'All', isSelected: false});
     this.statusList.push({value: 'OPEN', label: 'Open', isSelected: true});
@@ -114,6 +99,17 @@ export class OrderSearchComponent implements OnInit {
     this.statusList.push({value: 'DELIVERED', label: 'Delivered', isSelected: false});
     this.statusList.push({value: 'CANCELLED', label: 'Cancelled', isSelected: false});
   }
+
+
+executeSearch() {
+   
+  let orderSearchCriteria: OrderSearchCriteria = {
+    start: this.searchGroup.get('startDate').value.getTime(),
+    end: this.searchGroup.get('endDate').value.getTime(),
+    status: this.searchGroup.get('orderStatus').value,
+  };
+  this.searchCriteriaChange.emit(orderSearchCriteria);
+}
 }
 
 export interface Status {

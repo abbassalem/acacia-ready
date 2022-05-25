@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
+import { AgGridModule} from 'ag-grid-angular';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatRadioModule ,
     MatSnackBarModule ,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    AgGridModule.withComponents([])
   ],
   exports: [
     MatExpansionModule,
@@ -70,7 +72,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatRadioModule ,
     MatSnackBarModule ,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    AgGridModule
   ]
 })
 export class MaterialModule {}

@@ -7,7 +7,10 @@ import { StoreModule } from '@ngrx/store';
 import { BasketService } from '../core/services/basket.service';
 import { ProductService } from '../core/services/product.service';
 import { MaterialModule } from '../material';
-import { ProductsComponentsModule } from './components';
+import { BasketComponent } from './components/basket.component';
+import { ProductListComponent } from './components/product-list.component';
+import { ProductDetailComponent } from './components/product-selected.component';
+import { ProductViewComponent } from './components/product-view.component';
 import { BasketPageComponent } from './containers/basket-page.component';
 import { ProductListPageComponent } from './containers/product-list-page.component';
 import { ProductSelectedPageComponent } from './containers/product-selected-page.component';
@@ -20,7 +23,6 @@ import { reducers } from './reducers';
   imports: [
     CommonModule,
     MaterialModule,
-    ProductsComponentsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'categories/0', pathMatch: 'full'},
@@ -36,7 +38,11 @@ import { reducers } from './reducers';
     ProductSelectedPageComponent,
     ProductViewPageComponent,
     ProductListPageComponent,
-    BasketPageComponent
+    BasketPageComponent,
+    ProductListComponent,
+    ProductViewComponent,
+    ProductDetailComponent,
+    BasketComponent
   ]
 })
 

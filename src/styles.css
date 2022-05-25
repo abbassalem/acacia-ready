@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
+
+@import "~ag-grid-community/dist/styles/ag-grid.css"; 
+@import "~ag-grid-community/dist/styles/ag-theme-alpine-dark.css"; 
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 /* purple-green */
 indigo-pink, pink-bluegrey
 * {

@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from '../material';
-import { OrderComponentsModule } from './components';
 import { OrderListPageComponent } from './containers/order-list-page.component';
 import { OrdersEffects } from './effects/orders.effects';
 import { OrderService } from './services/orders.service';
@@ -15,13 +14,13 @@ import { reducer } from './reducers/orders.reducer';
   imports: [
     CommonModule,
     MaterialModule,
-    OrderComponentsModule,
+    // OrderComponentsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', component: OrderListPageComponent}
     ]),
     StoreModule.forFeature('orders', reducer ),
-    EffectsModule.forFeature([OrdersEffects]),
+    EffectsModule.forFeature([OrdersEffects])
   ],
   declarations: [
     OrderListPageComponent  ],

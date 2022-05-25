@@ -21,8 +21,7 @@ export enum OrderStatus {
     ARCHIVED = 'ARCHIVED'
 }
 
-
-export interface DurationWithStatus {
+export interface OrderSearchCriteria {
     start: number;
     end: number;
     status?: string;

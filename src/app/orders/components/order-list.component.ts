@@ -1,20 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DurationWithStatus, Order } from '../../shop/models/order.model';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Order } from '../../shop/models/order.model';
+import { AgGridEvent, GridReadyEvent, ColDef } from 'ag-grid-community';
+import { AgGridAngular } from 'ag-grid-angular'
+import 'ag-grid-enterprise';
+import { CheckboxRenderer } from '../renderers/eggrid.renderers';
 
 @Component({
   selector: 'app-order-list',
   template: `
 
-  <app-order-search (searchWithDates)= "propagateSearch($event)"></app-order-search>
-  <mat-accordion  style="width: 100%;">
-    <app-order-view  *ngFor="let orderElement of orders" [order]="orderElement"> </app-order-view>
-  </mat-accordion>
-
-  
+   <ag-grid-angular #agGrid
+          [gridOptions]="gridOptions" 
+          class="ag-theme-alpine-dark"
+          [masterDetail]="true"
+          [detailCellRendererParams]="detailCellRendererParams"
+          [columnDefs]="columnDefs"
+          [rowData]="orderList"
+          [rowSelection]="'single'"
+          [animateRows]="true"
+          [sideBar] = "true"
+          [pivotColumnGroupTotals]=""
+          (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    
 `,
   styles: [
     `
+    .header-order-date{
+      color: blue;
+      font-weight: bold;
+      background-color: white;
+    }
+
+    ag-grid-angular {
+      width: 100%;
+      height: 30%
+    }
     :host {
       display: flex;
       flex-wrap: wrap;
@@ -24,31 +45,81 @@ import { DurationWithStatus, Order } from '../../shop/models/order.model';
       flex: 1 0.5 auto;
       float:left
     }
+    
   `,
   ]
 })
 
 export class OrderListComponent {
 
-  @Output() searching = new EventEmitter<DurationWithStatus>() ;
-  @Input() orders: Order[];
+  @Input() orderList: Order[];
+  @ViewChild(AgGridAngular) agGrid: AgGridAngular;
 
-  constructor() {
+  gridApi;
+  gridColumnApi;
+  gridOptions;
+
+  defaultColDef:ColDef = {
+    enableValue: true,
+    enableRowGroup: true,
+    enablePivot: true,
+    sortable: true,
+    filter: true
+  };
+
+  columnDefs = [
+    { headerName: 'Order Date',headerClass:'hear-order-date',  hide: 'false', field: 'orderDate',cellRenderer: 'agGroupCellRenderer',  resizable: false, 
+    filter:true,sortable: true, valueFormatter: params => this.dateFormatter(params.data.orderDate)},
+
+    { headerName: 'Order Details',  children: [
+        { headerName: 'Status',field: 'status', sortable: true},
+        { headerName: 'Amount',field: 'amount',filter:true, sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
+        { headerName: 'Order Payment',field: 'paid', cellRenderer: CheckboxRenderer, editable: false }
+    ]},
+  
+    {headerName: 'Delivery Info',   children: [
+        { headerName: 'Delivery Date',field: 'deliveryDate', filter:true, sortable: true, 
+        valueFormatter: params => this.dateFormatter(params.data.deliveryDate) },
+        { headerName: 'Delivery Time',field: 'deliveryTime', sortable:true}
+    ]}
+  ];
+
+  detailCellRendererParams = {
+    detailGridOptions: {
+        columnDefs: [
+            { headerName: 'ID', field: 'id' },
+            { headerName: 'Quantity',  field: 'quantity'},
+            { headerName: 'Product Name',field: 'product.name'}
+        ],
+
+        onFirstDataRendered: params => {
+          params.api.sizeColumnsToFit();
+        }
+    },
+    getDetailRowData: (params) => {
+        params.successCallback(params.data.items);
+    }, 
+  };
+
+  constructor() {}
+
+  dateFormatter(date): string {
+    let str = new Date(date).getDate().toString() + '/' + 
+    new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
+    return str;
   }
 
-  propagateSearch(event: DurationWithStatus) {
-    this.searching.emit(event);
+  getRowNodeId(params)  {
+    return params.id;
   }
 
-  // filterDate(order: Order, start: Date, end: Date) {
-  //     const s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-  //     const e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-  //     const dd = new Date(order.orderDate);
-  //     const d = new Date(dd.getFullYear(), dd.getMonth(), dd.getDate());
-  //     if ( d >= s && d <= e ) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  // }
+  onGridReady(params: GridReadyEvent) {
+    this.agGrid.api.sizeColumnsToFit();
+  }
+
+  clearSelection(): void {
+    this.agGrid.api.deselectAll();
+  }
+
 }
+

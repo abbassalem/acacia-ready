@@ -62,14 +62,14 @@ export class OrdersEffects {
     return this.actions$.pipe(
       ofType<fromOrderActions.Load>(fromOrderActions.OrderActionTypes.Load),
       switchMap( action => {
-        let res: Order[];
-        return this.orderService.getOrders(action.payload.userId, action.payload.durationWithStatus)
+        return this.orderService.getOrders(action.payload.userId, action.payload.orderSearchCriteria)
         .pipe(
           map( q => {
               resOrders =  q.docs.map( 
                 doc => {
                   return doc.data();
-                })
+                });
+                console.dir(resOrders);
                 return new fromOrderActions.LoadComplete(resOrders);
             }),
           catchError(err => of(new fromOrderActions.LoadError('error in loading orders'))

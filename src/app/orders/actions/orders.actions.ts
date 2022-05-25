@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { DurationWithStatus, Order } from '../../shop/models/order.model';
+import { Order, OrderSearchCriteria } from '../../shop/models/order.model';
 
 export enum OrderActionTypes {
   Reset = '[Order] Reset',
@@ -37,7 +37,7 @@ export class SaveOrderError implements Action {
 
 export class Load implements Action {
   readonly type = OrderActionTypes.Load
-  constructor(public payload: {userId: string, durationWithStatus: DurationWithStatus}) { }
+  constructor(public payload: {userId: string,orderSearchCriteria: OrderSearchCriteria}) { }
 }
 
 export class LoadComplete implements Action {
