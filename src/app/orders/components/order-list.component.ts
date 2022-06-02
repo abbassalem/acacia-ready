@@ -8,7 +8,6 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
 @Component({
   selector: 'app-order-list',
   template: `
-
    <ag-grid-angular #agGrid
           [gridOptions]="gridOptions" 
           class="ag-theme-alpine-dark"
@@ -22,7 +21,6 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
           [pivotColumnGroupTotals]=""
           (gridReady)="onGridReady($event)">
       </ag-grid-angular>
-    
 `,
   styles: [
     `
@@ -45,7 +43,6 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
       flex: 1 0.5 auto;
       float:left
     }
-    
   `,
   ]
 })
@@ -101,7 +98,10 @@ export class OrderListComponent implements OnChanges{
     }, 
   };
 
-  constructor() {}
+  constructor() {
+    console.log('changes');
+    console.dir(this.orderList);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
        console.log('changes');

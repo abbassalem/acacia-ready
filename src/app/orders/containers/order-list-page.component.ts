@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromAuthReducer from '../../../app/auth/reducers/auth.reducer';
 import { Observable } from 'rxjs';
-import { OrderSearchCriteria, Order } from '../../shop/models/order.model';
+import { OrderSearchCriteria, Order, OrderStatus } from '../../shop/models/order.model';
 import * as fromOrderReducer from '../reducers/orders.reducer';
 import { Load, Reset } from '../actions/orders.actions';
 import { getUser } from 'src/app/reducers';
@@ -41,9 +41,19 @@ export class OrderListPageComponent implements OnInit {
     this.authStore.select(getUser).subscribe(user => {
       this.loggedUserId = user.uid;
       console.log('userId: ' + this.loggedUserId);
+      let criteria: OrderSearchCriteria = 
+      {start: new Date().getTime(), end: new Date().getTime(), status: OrderStatus.OPEN};
+      let payload = { userId:this.loggedUserId,orderSearchCriteria: criteria};
+      this.orderStore.dispatch(new Load(payload));
+      
+      this.orders$ = this.orderStore.select(fromOrderReducer.getOrders);
+      this.orders$.subscribe(
+        orders => console.dir(orders)
+      );
     });
   }
-
+  
+  
   executeQuery(orderSearchCriteria: OrderSearchCriteria) {
     let payload = { userId:this.loggedUserId,orderSearchCriteria: orderSearchCriteria};
     this.orderStore.dispatch(new Reset);

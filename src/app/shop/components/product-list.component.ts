@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Category } from '../models/category.model';
@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 import * as fromCategoryActions from './../actions/category.actions';
 import * as fromCategories from './../reducers/categories.reducer';
 import { BasketItem } from '../models/BasketItem.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-product',
@@ -44,33 +45,60 @@ import { BasketItem } from '../models/BasketItem.model';
 
 export class ProductListComponent implements OnInit, OnChanges {
 
-  @Input() categories: Category[];
+  categories: Category[];
+  @Input() categories$: Observable<Category[]>;
   @Input() basketItems: BasketItem[];
+  @Input() currentTabIndex = 0 ;
   @Input() routeLinks: Array<{ catId: number, label: string, path: string }>;
+  @Output() changeCategoryIndex: EventEmitter<number> = new EventEmitter();
+
   products: Product[];
-  currentTabIndex = 0;
+  // currentTabIndex = 0;
 
   constructor(private store: Store<fromCategories.CategoryState>, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.currentTabIndex = +params['id'];
-      if (this.routeLinks[this.currentTabIndex]) {
-        this.store.dispatch(new fromCategoryActions.Select(this.routeLinks[this.currentTabIndex].catId));
-      }
-      if (this.categories[this.currentTabIndex]) {
-        this.products = this.categories[this.currentTabIndex].products;
-      }
-    });
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.categories[this.currentTabIndex]) {
+    this.categories$.subscribe( cats => {
+      console.log('currentTabIndex: ' + this.currentTabIndex);
+      this.categories = cats;
+
+      if (this.categories[this.currentTabIndex]) {
+        this.products = cats[this.currentTabIndex].products;
+        this.changeCategoryIndex.emit(this.currentTabIndex);
+      }
+      });
+   
+   }
+
+   ngOnChanges(changes: SimpleChanges): void {
+
+    if (this.categories && this.categories[this.currentTabIndex]) {
       this.products = this.categories[this.currentTabIndex].products;
-      this.store.dispatch(new fromCategoryActions.Select(this.categories[this.currentTabIndex].id));
+      this.changeCategoryIndex.emit(this.currentTabIndex);
     }
-  }
+
+   }
+   /////
+  // ngOnInit() {
+  //   this.route.params.subscribe(params => {
+  //     this.currentTabIndex = +params['id'];
+  //     if (this.routeLinks[this.currentTabIndex]) {
+  //       this.store.dispatch(new fromCategoryActions.Select(this.routeLinks[this.currentTabIndex].catId));
+  //     }
+  //     if (this.categories[this.currentTabIndex]) {
+  //       this.products = this.categories[this.currentTabIndex].products;
+  //     }
+  //   });
+  // }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (this.categories[this.currentTabIndex]) {
+  //     this.products = this.categories[this.currentTabIndex].products;
+  //     this.store.dispatch(new fromCategoryActions.Select(this.categories[this.currentTabIndex].id));
+  //   }
+  // }
 
   getQuantity(prodId: number) {
     let qty = undefined;
