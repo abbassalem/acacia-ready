@@ -1,26 +1,33 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Order } from '../../shop/models/order.model';
-import { AgGridEvent, GridReadyEvent, ColDef } from 'ag-grid-community';
+import { GridReadyEvent, ColDef } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular'
 import 'ag-grid-enterprise';
+import 'ag-grid-enterprise';
+import { ButtonRendererComponent } from '../renderers/button-renderer.component';
 import { CheckboxRenderer } from '../renderers/eggrid.renderers';
 
 @Component({
   selector: 'app-order-list',
   template: `
-   <ag-grid-angular #agGrid
+ <ag-grid-angular #agGrid *ngIf="orderList && orderList.length > 0"
           [gridOptions]="gridOptions" 
-          class="ag-theme-alpine-dark"
           [masterDetail]="true"
+          [pagination]= "true"
+          [paginationPageSize]= '10'
+          [columnDefs]= "columnDefs"
+          [defaultColDef]="defaultColDef"
+          class="ag-theme-alpine-dark"
           [detailCellRendererParams]="detailCellRendererParams"
-          [columnDefs]="columnDefs"
           [rowData]="orderList"
-          [rowSelection]="'single'"
+          [getRowNodeId]="getRowNodeId"
           [animateRows]="true"
-          [sideBar] = "true"
           [pivotColumnGroupTotals]=""
-          (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
+          (gridReady)="onGridReady($event)"
+         
+          >
+          
+   </ag-grid-angular>
 `,
   styles: [
     `
@@ -32,7 +39,7 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
 
     ag-grid-angular {
       width: 100%;
-      height: 30%
+      height: 530px;
     }
     :host {
       display: flex;
@@ -50,7 +57,7 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
 export class OrderListComponent implements OnChanges{
 
   @Input() orderList: Order[];
-  @ViewChild(AgGridAngular) agGrid: AgGridAngular;
+  @ViewChild(AgGridAngular) orderGrid: AgGridAngular;
 
   gridApi;
   gridColumnApi;
@@ -58,29 +65,36 @@ export class OrderListComponent implements OnChanges{
 
   defaultColDef:ColDef = {
     enableValue: true,
-    enableRowGroup: true,
-    enablePivot: true,
     sortable: true,
-    filter: true
+    filter: false,
+    lockPinned:true,
+    lockVisible: true,
+    pinned: 'left'
   };
 
-  columnDefs = [
-    { headerName: 'Order Date',headerClass:'hear-order-date',  hide: 'false', field: 'orderDate',cellRenderer: 'agGroupCellRenderer',  resizable: false, 
-    filter:true,sortable: true, valueFormatter: params => this.dateFormatter(params.data.orderDate)},
-
-    { headerName: 'Order Details',  children: [
-        { headerName: 'Status',field: 'status', sortable: true},
-        { headerName: 'Amount',field: 'amount',filter:true, sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
-        { headerName: 'Order Payment',field: 'paid', cellRenderer: CheckboxRenderer, editable: false }
-    ]},
-  
-    {headerName: 'Delivery Info',   children: [
-        { headerName: 'Delivery Date',field: 'deliveryDate', filter:true, sortable: true, 
-        valueFormatter: params => this.dateFormatter(params.data.deliveryDate) },
-        { headerName: 'Delivery Time',field: 'deliveryTime', sortable:true}
-    ]}
+  columnDefs =  [
+   
+    { headerName: 'Order Date',
+       field: 'orderDate', pinned: 'left',lockPinned:true,lockVisible: true,
+        cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate)},
+    {headerName: 'Status',field: 'status'},
+    {headerName: 'Amount',field: 'amount',sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
+    { headerName: 'Order Payment',field: 'paid', cellRenderer: CheckboxRenderer },
+    { headerName: 'Delivery Date',field: 'deliveryDate', 
+            valueFormatter: params => this.dateFormatter(params.data.deliveryDate)},
+    { headerName: 'Delivery Time',field: 'deliveryTime'},
+    { headerName: 'Copy to basket', field: '',  cellRenderer: ButtonRendererComponent,
+        // cellStyle: {'color': 'blue', 'background-color': 'darkgrey'},
+        cellRendererParams: {
+          label: 'Copy to Basket',
+          onClick: function(params: any) {
+             alert('data: ' + params.rowData.deliveryDate);
+             console.table(params.rowData.items);
+          }
+    }
+  }
   ];
-
+  // cellStyle: {'color': 'maroon', 'background-color': 'lightgrey'}, 
   detailCellRendererParams = {
     detailGridOptions: {
         columnDefs: [
@@ -99,14 +113,13 @@ export class OrderListComponent implements OnChanges{
   };
 
   constructor() {
-    console.log('changes');
-    console.dir(this.orderList);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-       console.log('changes');
-       console.dir(changes['orderList']);
+      //  console.log('changes');
+      //  console.dir(changes['orderList']);
   }
+  
   dateFormatter(date): string {
     let str = new Date(date).getDate().toString() + '/' + 
     new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
@@ -118,11 +131,11 @@ export class OrderListComponent implements OnChanges{
   }
 
   onGridReady(params: GridReadyEvent) {
-    this.agGrid.api.sizeColumnsToFit();
+    this.orderGrid.api.sizeColumnsToFit();
   }
 
   clearSelection(): void {
-    this.agGrid.api.deselectAll();
+    this.orderGrid.api.deselectAll();
   }
 
 }

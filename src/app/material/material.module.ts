@@ -22,6 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { AgGridModule} from 'ag-grid-angular';
+import { ButtonRendererComponent } from '../orders/renderers/button-renderer.component';
+import { CheckboxRenderer } from '../orders/renderers/eggrid.renderers';
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import { AgGridModule} from 'ag-grid-angular';
     MatSnackBarModule ,
     MatGridListModule,
     MatMenuModule,
-    AgGridModule.withComponents([])
+    AgGridModule.forRoot()
+    // AgGridModule.withComponents([ButtonRendererComponent, CheckboxRenderer])
   ],
   exports: [
     MatExpansionModule,

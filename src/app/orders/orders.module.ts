@@ -9,12 +9,13 @@ import { OrderListPageComponent } from './containers/order-list-page.component';
 import { OrdersEffects } from './effects/orders.effects';
 import { OrderService } from './services/orders.service';
 import { reducer } from './reducers/orders.reducer';
+import { OrderSearchComponent } from './components/order-search.component';
+import { OrderListComponent } from './components/order-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
-    // OrderComponentsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', component: OrderListPageComponent}
@@ -23,7 +24,10 @@ import { reducer } from './reducers/orders.reducer';
     EffectsModule.forFeature([OrdersEffects])
   ],
   declarations: [
-    OrderListPageComponent  ],
+    OrderListPageComponent ,
+    OrderSearchComponent,
+    OrderListComponent 
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [OrdersEffects,OrderService]
 })

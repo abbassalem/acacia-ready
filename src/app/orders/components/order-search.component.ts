@@ -1,41 +1,44 @@
-import { Component, Output, Input, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
 
 @Component({
   selector: 'app-order-search',
   template: `
-    <form [formGroup]="searchGroup">
-  <mat-card>
-    <mat-card-title style="text-align:start  ;"><small><b>Search order</b></small></mat-card-title>
-    <mat-card-content>
-              <button style="align-content: flex-start;" mat-flat-button color="accent" 
-                  [disabled]="!searchGroup.valid" (click) = "executeSearch()">
-                <mat-icon>search</mat-icon>Search
-            </button>
-            &nbsp;&nbsp;
-            <mat-form-field style="max-width: fit-content;">
-                  <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                  <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field style="max-width: fit-content;">
-                  <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                  <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
+  <form [formGroup]="searchGroup">
+      <mat-toolbar>
+        <mat-toolbar-row>
+            <h6 style="float: right"><small>Search order</small></h6>
+      </mat-toolbar-row>
+      
+      <mat-toolbar-row>    
+      <mat-form-field style="max-width: fit-content;" >
+            <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <mat-form-field style="max-width: fit-content;">
+            <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        &nbsp;&nbsp;
             
-            <mat-form-field>
-                  <mat-select formControlName="orderStatus">
-                    <mat-option *ngFor= "let status of statusList" [value]="status.value" 
-                      [selected]="status.isSelected">{{status.label}}
-                    </mat-option>
-                  </mat-select>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </form>
-  <br><br>
+        <mat-form-field>
+              <mat-select formControlName="orderStatus">
+                  <mat-option *ngFor= "let status of statusList" [value]="status.value" 
+                    [selected]="status.isSelected">{{status.label}}
+                  </mat-option>
+              </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <button style="align-content: flex-start;" mat-flat-button color="accent" [disabled]="!searchGroup.valid" (click) = "executeSearch()">
+            <mat-icon>search</mat-icon>Search
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>    
+  </form>
   `,
   styles: [
     `
@@ -53,6 +56,7 @@ import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
 
     .mat-form-field {
       min-width: 300px;
+      font-size: 12px;
     }
 
     .mat-spinner {
@@ -87,7 +91,7 @@ export class OrderSearchComponent implements OnInit {
       {
         startDate: new FormControl(new Date(0), [Validators.required]),
         endDate: new FormControl(new Date(), [Validators.required]),
-        orderStatus: new FormControl('OPEN')
+        orderStatus: new FormControl('ALL')
       }
     );   
   }
