@@ -6,6 +6,8 @@ import { OrderSearchCriteria, Order } from '../../shop/models/order.model';
 import * as fromOrderReducer from '../reducers/orders.reducer';
 import { Load, Reset } from '../actions/orders.actions';
 import { getUser } from 'src/app/reducers';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { AddOrderItems } from 'src/app/shop/actions/basket.actions';
 
 @Component({
   selector: 'app-order-list-page',
@@ -14,7 +16,7 @@ import { getUser } from 'src/app/reducers';
   <app-order-search (searchCriteriaChange)= "executeQuery($event)"  >
   </app-order-search>
 
-    <app-order-list  [orderList]="orders$ | async">
+    <app-order-list (addToBasketEvent)="addToBasket($event)" [orderList]="orders$ | async">
   </app-order-list>
   `,
   styles: [
@@ -34,6 +36,7 @@ export class OrderListPageComponent implements OnInit {
   loggedUserId: string;
 
   constructor(private authStore: Store<fromAuthReducer.State>, 
+              private snackBar: MatSnackBar,
               private orderStore: Store<fromOrderReducer.OrderState>) {
   }
 
@@ -49,5 +52,17 @@ export class OrderListPageComponent implements OnInit {
     this.orderStore.dispatch(new Reset);
     this.orderStore.dispatch(new Load(payload));
     this.orders$ = this.orderStore.select(fromOrderReducer.getOrders);
+  }
+
+  addToBasket(event) {
+  let snackBarRef: MatSnackBarRef<any>;
+    snackBarRef = this.snackBar.open('Items added to basket successfully.','Close',{ 
+      duration: 4000,
+      panelClass: ["snack-notification"],
+      horizontalPosition: "center",
+      verticalPosition: "top"
+    });
+    // snackBarRef.afterDismissed().subscribe ( () => {
+    this.orderStore.dispatch(new AddOrderItems(event));
   }
 }

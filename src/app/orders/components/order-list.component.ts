@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ɵɵsetComponentScope } from '@angular/core';
 import { Order } from '../../shop/models/order.model';
 import { GridReadyEvent, ColDef } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular'
@@ -6,6 +6,7 @@ import 'ag-grid-enterprise';
 import 'ag-grid-enterprise';
 import { ButtonRendererComponent } from '../renderers/button-renderer.component';
 import { CheckboxRenderer } from '../renderers/eggrid.renderers';
+import { BasketItem } from 'src/app/shop/models/BasketItem.model';
 
 @Component({
   selector: 'app-order-list',
@@ -23,9 +24,7 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
           [getRowNodeId]="getRowNodeId"
           [animateRows]="true"
           [pivotColumnGroupTotals]=""
-          (gridReady)="onGridReady($event)"
-         
-          >
+          (gridReady)="onGridReady($event)">
           
    </ag-grid-angular>
 `,
@@ -54,28 +53,40 @@ import { CheckboxRenderer } from '../renderers/eggrid.renderers';
   ]
 })
 
-export class OrderListComponent implements OnChanges{
+export class OrderListComponent {
 
   @Input() orderList: Order[];
   @ViewChild(AgGridAngular) orderGrid: AgGridAngular;
-
+  @Output() addToBasketEvent: EventEmitter<BasketItem[]> = new EventEmitter();
   gridApi;
   gridColumnApi;
   gridOptions;
 
   defaultColDef:ColDef = {
-    enableValue: true,
     sortable: true,
-    filter: false,
-    lockPinned:true,
-    lockVisible: true,
-    pinned: 'left'
+    filter: true,
+    editable: false
   };
 
+  // toolPanels: [
+  //   {
+  //     id: 'id',
+  //     labelDefault: 'labelDefault',
+  //     labelKey: 'labelKey',
+  //     iconKey: 'iconKey',
+  //     toolPanel: 'agColumnsToolPanel',
+  //     toolPanelParams: {
+  //       suppressPivotMode: true,
+  //       suppressValues: true,
+  //     },
+  //   },
+  // ]
+  
   columnDefs =  [
    
     { headerName: 'Order Date',
        field: 'orderDate', pinned: 'left',lockPinned:true,lockVisible: true,
+        cellStyle: {'color': 'yellow', 'font-weight': 'bold'},
         cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate)},
     {headerName: 'Status',field: 'status'},
     {headerName: 'Amount',field: 'amount',sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
@@ -83,18 +94,16 @@ export class OrderListComponent implements OnChanges{
     { headerName: 'Delivery Date',field: 'deliveryDate', 
             valueFormatter: params => this.dateFormatter(params.data.deliveryDate)},
     { headerName: 'Delivery Time',field: 'deliveryTime'},
-    { headerName: 'Copy to basket', field: '',  cellRenderer: ButtonRendererComponent,
-        // cellStyle: {'color': 'blue', 'background-color': 'darkgrey'},
+    { headerName: 'Add to basket', field: '',  cellRenderer: ButtonRendererComponent,
         cellRendererParams: {
-          label: 'Copy to Basket',
-          onClick: function(params: any) {
-             alert('data: ' + params.rowData.deliveryDate);
-             console.table(params.rowData.items);
+          label: 'Add to Basket',
+          onClick: params => {
+            this.addToBasket(params.rowData.items);
           }
     }
   }
   ];
-  // cellStyle: {'color': 'maroon', 'background-color': 'lightgrey'}, 
+  
   detailCellRendererParams = {
     detailGridOptions: {
         columnDefs: [
@@ -114,12 +123,11 @@ export class OrderListComponent implements OnChanges{
 
   constructor() {
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-      //  console.log('changes');
-      //  console.dir(changes['orderList']);
-  }
   
+  addToBasket(items: Array<BasketItem>) {
+    this.addToBasketEvent.emit(items);
+  }
+
   dateFormatter(date): string {
     let str = new Date(date).getDate().toString() + '/' + 
     new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
