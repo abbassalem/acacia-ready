@@ -84,7 +84,7 @@ export class OrderListComponent {
   
   columnDefs =  [
    
-    { headerName: 'Order Date',
+    { headerName: 'Order Date - Expand for Items',
        field: 'orderDate', pinned: 'left',lockPinned:true,lockVisible: true,
         cellStyle: {'color': 'yellow', 'font-weight': 'bold'},
         cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate)},
@@ -94,9 +94,9 @@ export class OrderListComponent {
     { headerName: 'Delivery Date',field: 'deliveryDate', 
             valueFormatter: params => this.dateFormatter(params.data.deliveryDate)},
     { headerName: 'Delivery Time',field: 'deliveryTime'},
-    { headerName: 'Add to basket', field: '',  cellRenderer: ButtonRendererComponent,
+    { headerName: '', field: '',  cellRenderer: ButtonRendererComponent,
         cellRendererParams: {
-          label: 'Add to Basket',
+          label: 'Add items to Basket',
           onClick: params => {
             this.addToBasket(params.rowData.items);
           }
