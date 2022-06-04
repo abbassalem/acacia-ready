@@ -82,22 +82,13 @@
             "browserTarget": "acacia-ready:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
-          }
+          "test": {
+            "builder": "@angular-builders/jest:run",
+            "options": {
+              "tsConfig": "<rootDir>/src/tsconfig.spec.json",
+              "collectCoverage": false,
+              "forceExit": true
+            }
         }
       }
     }
