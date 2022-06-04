@@ -18,17 +18,12 @@ export class OrderService {
       return saved;  
     }
 
-
-   // TODO: use duration to filter 
   getOrders(userId: string, orderSearchCriteria: OrderSearchCriteria): Observable<QuerySnapshot<DocumentData>> {
-    console.log('service => duration getOrders: ');
-    console.dir(orderSearchCriteria);
-
        if(orderSearchCriteria.status == 'ALL'){
           return this.db.collection('orders', 
             ref => ref.where('userId', '==', userId)
-                  // .where('orderDate', '>=', inputDurationWithStatus.start)
-                  // .where('orderDate', '<=', inputDurationWithStatus.end)
+                  // .where('orderDate', '>=', orderSearchCriteria.start)
+                  // .where('orderDate', '<=', orderSearchCriteria.end)
                   // .where('status', '==', inputDurationWithStatus.status)
                   // .orderBy( "orderDate", "desc" )
                   )
@@ -36,9 +31,9 @@ export class OrderService {
        } else {
         return this.db.collection('orders', 
             ref => ref.where('userId', '==', userId)
-                    // .where('orderDate', '>=', inputDurationWithStatus.start)
-                    // .where('orderDate', '<=', inputDurationWithStatus.end)
-                    .where('status', '==', orderSearchCriteria.status)
+                    // .where('orderDate', '>=', orderSearchCriteria.start)
+                    // .where('orderDate', '<=', orderSearchCriteria.end)
+                    // .where('status', '==', orderSearchCriteria.status)
                     // .orderBy( "orderDate", "desc" )
                     )
             .get();

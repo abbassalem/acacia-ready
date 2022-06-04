@@ -179,7 +179,6 @@ export class OrderViewComponent {
   }
 
   open(id) {
-    console.log('order Id: ' + id);
     this.loadItems();
     this.panelOpenState = true;
   }

@@ -43,7 +43,6 @@ export class OrderListPageComponent implements OnInit {
   ngOnInit(): void {  
     this.authStore.select(getUser).subscribe(user => {
       this.loggedUserId = user.uid;
-      console.log('userId: ' + this.loggedUserId);
     });
   }
   

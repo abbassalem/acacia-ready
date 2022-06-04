@@ -88,7 +88,7 @@ export class ProductDetailComponent {
   }
 
   get price() {
-    return this.product.id;
+    return this.product.price;
   }
 
   get description() {

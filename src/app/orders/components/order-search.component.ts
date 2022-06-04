@@ -12,7 +12,7 @@ import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
       </mat-toolbar-row>
       
       <mat-toolbar-row>    
-      <mat-form-field style="max-width: fit-content;" >
+      <!-- <mat-form-field style="max-width: fit-content;" >
             <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
@@ -22,7 +22,7 @@ import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
             <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
+          </mat-form-field> -->
         &nbsp;&nbsp;
             
         <mat-form-field>

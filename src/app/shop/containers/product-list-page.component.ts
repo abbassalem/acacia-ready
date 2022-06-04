@@ -69,10 +69,8 @@ export class ProductListPageComponent implements OnInit {
 
     this.route.paramMap.subscribe( params => {
         this.currentCategoryIndex = +params.get('id');
-        console.log('pathVariable : ' + this.currentCategoryIndex);
         if( this.routeLinks[this.currentCategoryIndex].catId ) {
           this.selectedCategoryId  = this.routeLinks[this.currentCategoryIndex].catId;
-          console.log('selectedCategoryId router: ' + this.selectedCategoryId );
           this.store.dispatch(new fromCategoryActions.Select(this.selectedCategoryId));
         }
     });
@@ -80,7 +78,6 @@ export class ProductListPageComponent implements OnInit {
   }
 
   setCurrentCategoryIndex(index: number) {
-    console.log('EventEmitter catid: ' + index);
     this.currentCategoryIndex = index;
   }  
 }

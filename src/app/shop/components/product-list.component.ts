@@ -61,7 +61,6 @@ export class ProductListComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.categories$.subscribe( cats => {
-      console.log('currentTabIndex: ' + this.currentTabIndex);
       this.categories = cats;
 
       if (this.categories[this.currentTabIndex]) {

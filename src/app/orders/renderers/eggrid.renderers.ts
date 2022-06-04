@@ -41,7 +41,6 @@ ButtonRenderer.prototype.init = function(params) {
 }
 
 ButtonRenderer.prototype.buttonHandler = function(e) {
-  console.log('inside buttonrenderer handler');
   let cllick = e.target.click;
   let colId = this.params.column.colId;
   this.params.columnDefs['orderUser.displayName'].hide = false;

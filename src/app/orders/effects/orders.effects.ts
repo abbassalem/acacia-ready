@@ -69,7 +69,6 @@ export class OrdersEffects {
                 doc => {
                   return doc.data();
                 });
-                console.dir(resOrders);
                 return new fromOrderActions.LoadComplete(resOrders);
             }),
           catchError(err => of(new fromOrderActions.LoadError('error in loading orders'))
