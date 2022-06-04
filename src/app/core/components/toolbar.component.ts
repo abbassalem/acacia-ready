@@ -28,4 +28,9 @@ import { Component } from '@angular/core';
 
 })
 export class ToolbarComponent {
+
+  constructor() {
+
+  }
+  
 }
