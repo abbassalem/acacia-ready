@@ -97,7 +97,7 @@ export class ProductDetailComponent {
 
   get thumbnail() {
     return (
-       'assets/images/app/' + `${this.product.image}`
+        `${this.product.imageUrl}`
     );
   }
 

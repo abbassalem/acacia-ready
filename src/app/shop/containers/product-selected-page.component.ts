@@ -80,7 +80,7 @@ export class ProductSelectedPageComponent implements OnInit {
   isSelectedProductInBasket$: Observable<boolean>;
   quantityFormControl: FormControl;
   valid$: Observable<boolean>;
-  selectedCategoryId$: Observable<number>;
+  selectedCategoryId$: Observable<string>;
   basketItems: BasketItem[];
   
   constructor(private store: Store<index.ShopState>, private route: ActivatedRoute, private location: Location) {

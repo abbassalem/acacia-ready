@@ -4,7 +4,7 @@ import { Category } from '../models/category.model';
 
 export interface CategoryState extends EntityState<Category> {
   isLoaded: boolean | null;
-  selectedCategoryId: number | null;
+  selectedCategoryId: string | null;
   selectedProductId: number | null;
 }
 

@@ -45,12 +45,12 @@ import * as index from './../reducers/index';
 
 export class ProductListPageComponent implements OnInit {
 
-  routeLinks: Array<{catId: number, label: string, path: string}> = new Array();
+  routeLinks: Array<{catId: string, label: string, path: string}> = new Array();
   categories$: BehaviorSubject<Category[]> = new BehaviorSubject(null);
   basketItems$: Observable<BasketItem[]>;
 
-  selectedCategoryId: number;
-  currentCategoryIndex: number = 0;
+  selectedCategoryId: string;
+  currentCategoryIndex: number;
   
   constructor(private store: Store<fromCategories.CategoryState>, private route: ActivatedRoute) {
   }

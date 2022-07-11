@@ -100,8 +100,8 @@ export class ProductViewComponent {
 
 
   get thumbnail(): string | boolean {
-    if (this.product.image) {
-      return 'assets/images/app/' + `${this.product.image}`;
+    if (this.product.imageUrl) {
+      return `${this.product.imageUrl}`;
     }
     return false;
   }

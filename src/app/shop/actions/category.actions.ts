@@ -1,3 +1,4 @@
+
 import { Action } from '@ngrx/store';
 import { Category } from '../models/category.model';
 
@@ -44,7 +45,7 @@ export class LoadError implements Action {
 
 export class Select implements Action {
   readonly type = CategoryActionTypes.Select;
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 

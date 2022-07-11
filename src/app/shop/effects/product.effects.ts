@@ -24,6 +24,33 @@ export class ProductEffects {
   )
   });
 
+
+  // getAllCategories$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType<fromCategoryActions.Load>(fromCategoryActions.CategoryActionTypes.Load),
+  //     switchMap((action) =>
+  //       this.productService.getCategories().pipe(
+  //         map((cats: Array<Category>) =>{
+  //           return new fromCategoryActions.LoadComplete(cats);
+  //         }
+  //         ),
+  //         catchError(err => of(new fromCategoryActions.LoadError(err)))
+  //       )
+  //     )
+  //   )
+  // );
+
+  getAllCategoriesSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType<fromCategoryActions.LoadComplete>(fromCategoryActions.CategoryActionTypes.LoadComplete),
+      map(action =>
+        console.dir('getAllCategoriesSuccess')
+      )
+    )
+  }, { dispatch: false }
+  )
+
+
   constructor(
     private actions$: Actions,
     private productService: ProductService,

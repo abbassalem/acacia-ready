@@ -49,11 +49,10 @@ export class ProductListComponent implements OnInit, OnChanges {
   @Input() categories$: Observable<Category[]>;
   @Input() basketItems: BasketItem[];
   @Input() currentTabIndex = 0 ;
-  @Input() routeLinks: Array<{ catId: number, label: string, path: string }>;
+  @Input() routeLinks: Array<{ catId: string, label: string, path: string }>;
   @Output() changeCategoryIndex: EventEmitter<number> = new EventEmitter();
 
   products: Product[];
-  // currentTabIndex = 0;
 
   constructor(private store: Store<fromCategories.CategoryState>, private route: ActivatedRoute) {
   }
@@ -64,6 +63,7 @@ export class ProductListComponent implements OnInit, OnChanges {
       this.categories = cats;
 
       if (this.categories[this.currentTabIndex]) {
+        console.log('onInit-currentTabIndex: ' + this.currentTabIndex);
         this.products = cats[this.currentTabIndex].products;
         this.changeCategoryIndex.emit(this.currentTabIndex);
       }
@@ -74,30 +74,12 @@ export class ProductListComponent implements OnInit, OnChanges {
    ngOnChanges(changes: SimpleChanges): void {
 
     if (this.categories && this.categories[this.currentTabIndex]) {
+      console.log('onchanges-currentTabIndex: ' + this.currentTabIndex);
       this.products = this.categories[this.currentTabIndex].products;
       this.changeCategoryIndex.emit(this.currentTabIndex);
     }
 
    }
-   /////
-  // ngOnInit() {
-  //   this.route.params.subscribe(params => {
-  //     this.currentTabIndex = +params['id'];
-  //     if (this.routeLinks[this.currentTabIndex]) {
-  //       this.store.dispatch(new fromCategoryActions.Select(this.routeLinks[this.currentTabIndex].catId));
-  //     }
-  //     if (this.categories[this.currentTabIndex]) {
-  //       this.products = this.categories[this.currentTabIndex].products;
-  //     }
-  //   });
-  // }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (this.categories[this.currentTabIndex]) {
-  //     this.products = this.categories[this.currentTabIndex].products;
-  //     this.store.dispatch(new fromCategoryActions.Select(this.categories[this.currentTabIndex].id));
-  //   }
-  // }
 
   getQuantity(prodId: number) {
     let qty = undefined;

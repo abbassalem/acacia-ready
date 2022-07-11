@@ -15,13 +15,17 @@ export class ProductService {
   }
 
   getCategories(): Observable<Array<Category>> {
-
     let cats: Array<Category> = new Array();
     return this.db.collection('categories').snapshotChanges().pipe(
       map( snapshot => {
-        cats = snapshot.map(action => action.payload.doc.data() as Category);
+        cats = snapshot.map(action =>{ 
+          let cat = action.payload.doc.data() as Category;
+          cat.id = action.payload.doc.id;
+          return cat;
+        });
         return cats;
       })
     )
   }
+
 }
