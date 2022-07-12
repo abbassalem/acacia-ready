@@ -35,12 +35,10 @@ import { BasketItem } from '../models/BasketItem.model';
     </mat-card-content>
     <mat-action-row>
       <button mat-raised-button  (click)="back()">
-              Cancel <mat-icon>close</mat-icon>
+              Close <mat-icon>close</mat-icon>
             </button>
     </mat-action-row>
-    <!-- <pstyle="padding:5px;margin:5px"> -->
-       
-    
+ 
 </mat-card>
   `,
   styles: [`
