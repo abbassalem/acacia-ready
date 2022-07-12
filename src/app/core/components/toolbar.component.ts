@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <mat-toolbar color="primary">
       <ng-content></ng-content>
-      <img src="/assets/icon/favicon.png" width="90" height="60" style="padding-right:4px">
+      <img src="/assets/images/favicon.png" width="90" height="60" style="padding-right:4px">
       <span class="appTitle">Acacia Ready</span>
     </mat-toolbar>
   `,

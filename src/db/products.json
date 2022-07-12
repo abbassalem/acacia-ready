@@ -5,7 +5,7 @@
       "name": "Baguette",
       "description": "",
       "reference": "x21",
-      "image": "/assets/img/baguette.jpg",
+      "image": "/assets/images/baguette.jpg",
       "category": 1,
       "prices": [
         {
@@ -24,7 +24,7 @@
       "name": "Pain Francais",
       "description": "",
       "reference": "x22",
-      "image": "/assets/img/french-bread.jpg",
+      "image": "/assets/images/french-bread.jpg",
       "category": 1,
       "prices": [
         {
@@ -43,7 +43,7 @@
       "name": "Piccolo Blanc",
       "description": "",
       "reference": "xxx23",
-      "image": "/assets/img/piccolo-white.jpg",
+      "image": "/assets/images/piccolo-white.jpg",
       "category": 1,
       "prices": [
         {
@@ -62,7 +62,7 @@
       "name": "Piccolo Gris",
       "description": "",
       "reference": "x24",
-      "image": "/assets/img/piccolo-brown.jpg",
+      "image": "/assets/images/piccolo-brown.jpg",
       "category": 1,
       "prices": [
         {
@@ -81,7 +81,7 @@
       "name": "Tartine BlancP",
       "description": "",
       "reference": "x24",
-      "image": "/assets/img/slice-white-small.jpg",
+      "image": "/assets/images/slice-white-small.jpg",
       "category": 1,
       "prices": [
         {
@@ -100,7 +100,7 @@
       "name": "Tartine BlancG",
       "description": "",
       "reference": "x25",
-      "image": "/assets/img/slice-white-big.jpg",
+      "image": "/assets/images/slice-white-big.jpg",
       "category": 1,
       "prices": [
         {
@@ -119,7 +119,7 @@
       "name": "Tartine GrisP",
       "description": "",
       "reference": "x26",
-      "image": "/assets/img/slice-brown-small.jpg",
+      "image": "/assets/images/slice-brown-small.jpg",
       "category": 1,
       "prices": [
         {
@@ -138,7 +138,7 @@
       "name": "Tartine GrisG",
       "description": "",
       "reference": "x27",
-      "image": "/assets/img/slice-white-big.jpg",
+      "image": "/assets/images/slice-white-big.jpg",
       "category": 1,
       "prices": [
         {
@@ -157,7 +157,7 @@
       "name": "Cereal P",
       "description": "",
       "reference": "x29",
-      "image": "/assets/img/slice-cereal-small.jpg",
+      "image": "/assets/images/slice-cereal-small.jpg",
       "category": 1,
       "prices": [
         {
@@ -176,7 +176,7 @@
       "name": "Croissant",
       "description": "",
       "reference": "x11",
-      "image": "/assets/img/croissant.jpg",
+      "image": "/assets/images/croissant.jpg",
       "category": 2,
       "prices": [
         {
@@ -195,7 +195,7 @@
       "name": "Chocolat",
       "description": "",
       "reference": "x12",
-      "image": "/assets/img/pain-chocolat.jpg",
+      "image": "/assets/images/pain-chocolat.jpg",
       "category": 2,
       "prices": [
         {
@@ -214,7 +214,7 @@
       "name": "Raisin",
       "description": "",
       "reference": "x13",
-      "image": "/assets/img/raisin.jpg",
+      "image": "/assets/images/raisin.jpg",
       "category": 2,
       "prices": [
         {
@@ -233,7 +233,7 @@
       "name": "Suisse rond",
       "description": "",
       "reference": "x14",
-      "image": "/assets/img/suisse.jpg",
+      "image": "/assets/images/suisse.jpg",
       "category": 2,
       "prices": [
         {
@@ -252,7 +252,7 @@
       "name": "Suisse long",
       "description": "",
       "reference": "x15",
-      "image": "/assets/img/suisse-long.jpg",
+      "image": "/assets/images/suisse-long.jpg",
       "category": 2,
       "prices": [
         {
@@ -271,7 +271,7 @@
       "name": "Creme",
       "description": "",
       "reference": "x15",
-      "image": "/assets/img/couque-creme.jpg",
+      "image": "/assets/images/couque-creme.jpg",
       "category": 2,
       "prices": [
         {
@@ -290,7 +290,7 @@
       "name": "Gausette",
       "description": "",
       "reference": "x17",
-      "image": "/assets/img/gausette.jpg",
+      "image": "/assets/images/gausette.jpg",
       "category": 2,
       "prices": [
         {

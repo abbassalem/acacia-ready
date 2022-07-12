@@ -47,7 +47,7 @@ export class OrderListPageComponent implements OnInit {
   }
   
   executeQuery(orderSearchCriteria: OrderSearchCriteria) {
-    let payload = { userId:this.loggedUserId,orderSearchCriteria: orderSearchCriteria};
+    let payload = { userId:this.loggedUserId, orderSearchCriteria: orderSearchCriteria};
     this.orderStore.dispatch(new Reset);
     this.orderStore.dispatch(new Load(payload));
     this.orders$ = this.orderStore.select(fromOrderReducer.getOrders);

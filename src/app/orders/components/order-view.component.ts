@@ -146,7 +146,7 @@ export class OrderViewComponent {
       case 'ARCHIVED': img = 'archived.png';
         break;
     }
-    return 'assets/images/core/' + img;
+    return 'assets/images/' + img;
   }
 
   addToBasket(message: string) {

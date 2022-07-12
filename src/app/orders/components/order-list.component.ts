@@ -67,20 +67,6 @@ export class OrderListComponent {
     filter: true,
     editable: false
   };
-
-  // toolPanels: [
-  //   {
-  //     id: 'id',
-  //     labelDefault: 'labelDefault',
-  //     labelKey: 'labelKey',
-  //     iconKey: 'iconKey',
-  //     toolPanel: 'agColumnsToolPanel',
-  //     toolPanelParams: {
-  //       suppressPivotMode: true,
-  //       suppressValues: true,
-  //     },
-  //   },
-  // ]
   
   columnDefs =  [
    
@@ -89,7 +75,7 @@ export class OrderListComponent {
         cellStyle: {'color': 'yellow', 'font-weight': 'bold'},
         cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate)},
     {headerName: 'Status',field: 'status'},
-    {headerName: 'Amount',field: 'amount',sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
+    {headerName: 'Amount  (£)',field: 'amount',sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
     { headerName: 'Order Payment',field: 'paid', cellRenderer: CheckboxRenderer },
     { headerName: 'Delivery Date',field: 'deliveryDate', 
             valueFormatter: params => this.dateFormatter(params.data.deliveryDate)},
@@ -107,9 +93,10 @@ export class OrderListComponent {
   detailCellRendererParams = {
     detailGridOptions: {
         columnDefs: [
-            { headerName: 'ID', field: 'id' },
-            { headerName: 'Quantity',  field: 'quantity'},
-            { headerName: 'Product Name',field: 'product.name'}
+          { headerName: 'Name',field: 'product.name'},
+          { headerName: 'Description', field: 'product.description' },
+          { headerName: 'Reference', field: 'product.reference' },
+          { headerName: 'Quantity',  field: 'quantity'}
         ],
 
         onFirstDataRendered: params => {

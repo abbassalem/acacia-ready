@@ -33,7 +33,7 @@ export class OrderService {
             ref => ref.where('userId', '==', userId)
                     // .where('orderDate', '>=', orderSearchCriteria.start)
                     // .where('orderDate', '<=', orderSearchCriteria.end)
-                    // .where('status', '==', orderSearchCriteria.status)
+                    .where('status', '==', orderSearchCriteria.status)
                     // .orderBy( "orderDate", "desc" )
                     )
             .get();
