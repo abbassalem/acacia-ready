@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import * as fromBasketActions from '../actions/basket.actions';
 import { Product } from '../models/product.model';
 import * as index from '../reducers/index';
@@ -34,9 +34,12 @@ import { BasketItem } from '../models/BasketItem.model';
         </app-product-detail>
     </mat-card-content>
     <mat-action-row>
-      <button mat-raised-button  (click)="back()">
-              Close <mat-icon>close</mat-icon>
-            </button>
+      <button *ngIf="valid$ | async" mat-raised-button  (click)="back()">
+              Cancel <mat-icon> cancel</mat-icon>
+      </button>
+      <button *ngIf="!(valid$ | async)" mat-raised-button  (click)="back()">
+              Close <mat-icon> cancel</mat-icon>
+      </button>
     </mat-action-row>
  
 </mat-card>
@@ -102,7 +105,6 @@ export class ProductSelectedPageComponent implements OnInit {
     this.store.dispatch(new fromBasketActions
         .AddBasketItem({ id: product.id, product: product, quantity: quantityValue }));
     this.back();
-      
   }
 
   removeFromBasket(product: Product) {
@@ -129,4 +131,5 @@ export class ProductSelectedPageComponent implements OnInit {
   back() {
     history.back();
   }
+
 }
