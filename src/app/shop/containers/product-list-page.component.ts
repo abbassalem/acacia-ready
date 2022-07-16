@@ -55,7 +55,7 @@ export class ProductListPageComponent implements OnInit {
   constructor(private store: Store<fromCategories.CategoryState>, private route: ActivatedRoute) {
   }
 
-  ngOnInit() {
+   ngOnInit() {
 
     this.store.dispatch(new fromCategoryActions.Load);
     this.store.dispatch(new fromBasketActions.Load());

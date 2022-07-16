@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, OnChanges, OnDestroy
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as fromBasketActions from '../actions/basket.actions';
 import { Product } from '../models/product.model';
 import * as index from '../reducers/index';

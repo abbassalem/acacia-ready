@@ -140,7 +140,7 @@
                     </mat-step>
 
 
-                    <mat-step [completed]="false" [option]="true" formGroupName="addressGroup" [stepControl]="addressGroup"
+                    <!-- <mat-step [completed]="false" [option]="true" formGroupName="addressGroup" [stepControl]="addressGroup"
                         label="Address" 
                         *ngIf="(addressOption | async) > 1">
                         <mat-form-field>
@@ -157,8 +157,8 @@
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button matStepperNext mat-raised-button color="accent"
                             [disabled]="!basketForm.controls['addressGroup'].valid">Next</button>
-                    </mat-step>
-                    <mat-step [completed]="true" formGroupName="contactGroup" [stepControl]="contactGroup"
+                    </mat-step> -->
+                    <mat-step [completed]="false" formGroupName="contactGroup" [stepControl]="contactGroup"
                         label="Contact">
                         <mat-form-field>
                             <input matInput placeholder="Email" formControlName="email" required>
@@ -168,9 +168,23 @@
                             <input matInput placeholder="Telephone" formControlName="telephone" required>
                         </mat-form-field>
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext mat-raised-button color="accent" (click)="saveOrder()"
-                            [disabled]="!basketForm.valid">Confirm Order</button>
+                        <button mat-button matStepperNext mat-raised-button color="accent"
+                            [disabled]="!basketForm.controls['contactGroup'].valid">Next</button>
                     </mat-step>
+
+                    <mat-step [completed]="true" [option]="true" formGroupName="paymentGroup" [stepControl]="paymentGroup" label="Payment" >
+                    <mat-form-field>
+                        <input matInput placeholder="email for receipt" formControlName="emailForReceipt">
+                    </mat-form-field>
+                    &nbsp;&nbsp;&nbsp;
+                   
+                    <button mat-button matStepperPrevious>Back</button>
+              
+                    <!-- saveOrder() -->
+                    <button mat-button matStepperNext mat-raised-button color="accent" (click)="initializePayment()" [disabled]="!basketForm.valid">Confirm Order & Payment</button>
+                </mat-step>
+ 
+
                     <!-- <button mat-button matStepperNext mat-raised-button color="accent"  -->
                     <!-- [disabled]="!basketForm.controls['contactGroup'].valid">Next</button> -->
                     <!-- </mat-step> -->

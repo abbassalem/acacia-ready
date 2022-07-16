@@ -1,6 +1,10 @@
 export const environment = {
   production: false,
   // endpoint: 'http://localhost:3000',
+  stripe: {
+    key: 'pk_test_51LLnGiIrcKgib2TTdsseyP4M7rDW5IbCBl1NZULXEYovYVoGJWhJHJ8ZTarOfAPTQJ1OGAUzdCwIRKZsLzqrQdno00BBLaLRe7'
+  } ,
+
   firebase: {
     apiKey: "AIzaSyAkhZZSPNGgb-a1o3pWGE0Bi7vLLk35VHM",
     authDomain: "acacia-ready.firebaseapp.com",

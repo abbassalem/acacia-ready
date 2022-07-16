@@ -18,6 +18,7 @@ import { ProductViewPageComponent } from './containers/product-view-page.compone
 import { BasketEffects } from './effects/basket.effects';
 import { ProductEffects } from './effects/product.effects';
 import { reducers } from './reducers';
+import { AngularFireFunctionsModule} from '@angular/fire/compat/functions'
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { reducers } from './reducers';
 
     StoreModule.forFeature('shop', reducers),
     EffectsModule.forFeature([ProductEffects, BasketEffects]),
+    AngularFireFunctionsModule,
   ],
   declarations: [
     ProductSelectedPageComponent,
