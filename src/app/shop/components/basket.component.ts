@@ -29,9 +29,6 @@ export class BasketComponent implements OnInit {
   @Input() basketItems: BasketItem[];
   @Input() deliveryTimes: Array<string>;
 
-  product = null;
-  stripeStatus = '';
-
   paymentHandler:any = null;
 
   order: Order;
@@ -58,8 +55,7 @@ export class BasketComponent implements OnInit {
   constructor(private store: Store<OrderState>,
               private location: Location,
               private fb: FormBuilder,
-              private authStore: Store<fromAuth.State> ) {
-        this.stripeStatus = '';  
+              private authStore: Store<fromAuth.State> ) { 
   }
 
   ngOnInit() {
@@ -133,8 +129,10 @@ export class BasketComponent implements OnInit {
           key: environment.stripe.key,
           locale: 'auto',
           token: function (stripeToken: any) {
-            console.log(stripeToken)
+            console.log(stripeToken);
+            this.order.paid = true;
             this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
+            
           }
         });
       }

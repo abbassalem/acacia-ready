@@ -173,14 +173,12 @@
                     </mat-step>
 
                     <mat-step [completed]="true" [option]="true" formGroupName="paymentGroup" [stepControl]="paymentGroup" label="Payment" >
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <input matInput placeholder="email for receipt" formControlName="emailForReceipt">
                     </mat-form-field>
-                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; -->
                    
                     <button mat-button matStepperPrevious>Back</button>
-              
-                    <!-- saveOrder() -->
                     <button mat-button matStepperNext mat-raised-button color="accent" (click)="initializePayment()" [disabled]="!basketForm.valid">Confirm Order & Payment</button>
                 </mat-step>
  
