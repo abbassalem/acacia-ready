@@ -28,7 +28,6 @@ export class BasketComponent implements OnInit {
 
   @Input() basketItems: BasketItem[];
   @Input() deliveryTimes: Array<string>;
-  // afFun.useEmulator("localhost", 5001);
 
   product = null;
   stripeStatus = '';
@@ -59,13 +58,8 @@ export class BasketComponent implements OnInit {
   constructor(private store: Store<OrderState>,
               private location: Location,
               private fb: FormBuilder,
-              // private afFun: AngularFireFunctions,
               private authStore: Store<fromAuth.State> ) {
-
-        // afFun.useEmulator("localhost", 5001);
-        this.product = null;
-        this.stripeStatus = '';
-        
+        this.stripeStatus = '';  
   }
 
   ngOnInit() {
@@ -111,12 +105,11 @@ export class BasketComponent implements OnInit {
   initializePayment() {
    
     this.saveOrder();
-   const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: environment.stripe.key,
       locale: 'auto',
       token: stripeToken =>  {
         console.log({stripeToken})
-        // alert('Stripe token generated!');
         this.order.paid = true;
         this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
       }
@@ -124,7 +117,6 @@ export class BasketComponent implements OnInit {
   
     paymentHandler.open({
       name: 'Order Date: '  + new Date(this.order.orderDate).toLocaleDateString(),
-      // name: 'this.order.orderDate.toLocaleString()',
       description: this.order.items.map(item => item.product.name).join(', '),
       amount: this.order.amount * 100
     });
@@ -138,11 +130,11 @@ export class BasketComponent implements OnInit {
       script.src = "https://checkout.stripe.com/checkout.js";
       script.onload = () => {
         this.paymentHandler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+          key: environment.stripe.key,
           locale: 'auto',
           token: function (stripeToken: any) {
             console.log(stripeToken)
-            // alert('Payment has been successfull!');
+            this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
           }
         });
       }
@@ -163,30 +155,10 @@ export class BasketComponent implements OnInit {
         amount: this.getTotal()
       };
 
-
       // this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
-
       // this.checkoutFirebase(123);
 
-
   }
-
-//   checkoutFirebase(productId: number): void {
-//     console.log('checking out with item id: ' + productId);
-
-//     var stripe = Stripe(environment.stripe.key);
-
-//     this.afFun.httpsCallable("stripeCheckout")({ id: productId })
-//         .subscribe(result => {
-//             console.log({ result });
-
-//             stripe.redirectToCheckout({
-//                 sessionId: result,
-//             }).then(function (result) {
-//                 console.log(result.error.message);
-//             });
-//         });
-// }
 
   getTotal() {
     return this.basketItems.map(

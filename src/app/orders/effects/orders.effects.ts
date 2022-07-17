@@ -42,8 +42,8 @@ export class OrdersEffects {
     return this.actions$.pipe(
         ofType<fromOrderActions.SaveOrderComplete>(fromOrderActions.OrderActionTypes.SaveOrderComplete),
         switchMap( (action) => {
-            this.snackBar.open('Order saved successfully.', 'Close',{
-            duration: 4000,
+            this.snackBar.open('Order & Payment  success.', 'Close',{
+            duration: 5000,
             panelClass: ["snack-notification"],
             horizontalPosition: "center",
             verticalPosition: "top"
