@@ -64,6 +64,21 @@ export function reducer(state = initialState, action: OrderActionsUnion): OrderS
         selectedOrderId: action.payload
       };
     }
+
+    case OrderActionTypes.SavePayment: {
+      return state;
+    }
+
+    case OrderActionTypes.SaveOrderComplete: {
+      return {
+        ...state, savedOrder: action.payload
+      }
+    }
+
+    case OrderActionTypes.SaveOrderError: {
+      return state;
+    }
+
     default: {
       return state;
     }

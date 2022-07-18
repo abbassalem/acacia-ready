@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Order, OrderSearchCriteria } from '../../shop/models/order.model';
+import { Order, OrderSearchCriteria, Payment } from '../../shop/models/order.model';
 
 export enum OrderActionTypes {
   Reset = '[Order] Reset',
@@ -12,7 +12,10 @@ export enum OrderActionTypes {
   CopyError = '[Order] Copy Error',
   SaveOrder = '[Order] Save Order',
   SaveOrderComplete = '[Order] Save Order Complete',
-  SaveOrderError = '[Order] Save Order Error'
+  SaveOrderError = '[Order] Save Order Error',
+  SavePayment = '[Payment] Save Payment',
+  SavePaymentComplete = '[Payment] Save Payment Complete',
+  SavePaymentError = '[Payment] Save Payment Error'
 }
 
 export class Reset implements Action {
@@ -32,6 +35,21 @@ export class SaveOrderComplete implements Action {
 
 export class SaveOrderError implements Action {
   readonly type = OrderActionTypes.SaveOrderError;
+  constructor(public payload: string) { }
+}
+
+export class SavePayment implements Action {
+  readonly type = OrderActionTypes.SavePayment;
+  constructor(public payload: Payment) { }
+}
+
+export class SavePaymentComplete implements Action {
+  readonly type = OrderActionTypes.SavePaymentComplete;
+  constructor(public payload: Payment) { }
+}
+
+export class SavePaymentError implements Action {
+  readonly type = OrderActionTypes.SavePaymentError;
   constructor(public payload: string) { }
 }
 
@@ -82,3 +100,6 @@ export type OrderActionsUnion =
   | SaveOrder
   | SaveOrderComplete
   | SaveOrderError
+  | SavePayment
+  | SavePaymentComplete
+  | SavePaymentError

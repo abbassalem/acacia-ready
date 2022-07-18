@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Order, OrderSearchCriteria} from '../../shop/models/order.model';
+import { Order, OrderSearchCriteria, Payment} from '../../shop/models/order.model';
 import { AngularFirestore, DocumentData , QuerySnapshot } 
         from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
@@ -15,6 +15,15 @@ export class OrderService {
       let docData = <Order> await (await docRef.get()).data();
       saved = Object.assign({id: docRef.id}, docData);
       this.db.collection('orders').doc(docRef.id).set({id: docRef.id}, {merge:true});
+      return saved;  
+    }
+
+    async savePayment(payment: Payment): Promise<Payment> {
+      let saved: Payment;  
+      let docRef = await this.db.collection('payments').add(payment);
+      let docData = <Payment> await (await docRef.get()).data();
+      saved = Object.assign({id: docRef.id}, docData);
+      this.db.collection('payments').doc(docRef.id).set({id: docRef.id}, {merge:true});
       return saved;  
     }
 

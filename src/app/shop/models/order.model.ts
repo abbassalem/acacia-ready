@@ -13,6 +13,16 @@ export interface Order {
    amount: number;
 }
 
+export interface Payment {
+    id?: string;
+    paymentDate: Date;
+    paymentId: string;
+    email?: string;
+    userId: string;
+    orderId?: string;
+    amount: number;
+ }
+
 export enum OrderStatus {
     OPEN = 'OPEN',
     DELIVERED = 'DELIVERED',

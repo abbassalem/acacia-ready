@@ -9,7 +9,7 @@ import * as fromRoot from '../../reducers';
 import * as fromBasketActions from '../actions/basket.actions';
 import * as fromOrderActions from '../../orders/actions/orders.actions';
 import { BasketItem } from '../models/BasketItem.model';
-import { Order, OrderStatus } from '../models/order.model';
+import { Order, OrderStatus, Payment } from '../models/order.model';
 import { OrderState } from 'src/app/orders/reducers/orders.reducer';
 // import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 // import { AngularFireFunctions  } from '@angular/fire/compat/functions';
@@ -105,8 +105,9 @@ export class BasketComponent implements OnInit {
       key: environment.stripe.key,
       locale: 'auto',
       token: stripeToken =>  {
-        console.log({stripeToken})
         this.order.paid = true;
+        let payData = this.setPaymentData(stripeToken);
+        this.store.dispatch(new fromOrderActions.SavePayment(payData));
         this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
       }
     });
@@ -128,16 +129,34 @@ export class BasketComponent implements OnInit {
         this.paymentHandler = (<any>window).StripeCheckout.configure({
           key: environment.stripe.key,
           locale: 'auto',
-          token: function (stripeToken: any) {
-            console.log(stripeToken);
-            this.order.paid = true;
-            this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
-            
+          token: stripeToken =>  {
           }
         });
       }
       window.document.body.appendChild(script);
     }
+  }
+
+  setPaymentData(token): Payment {
+
+    let pay: Payment ;
+    pay = {
+      paymentDate: new Date(),
+      amount: this.order.amount,
+      paymentId: token.card.id,
+      userId: this.loggedUser.uid,
+      email: token.email
+    };
+
+    // id?: string;
+    // paymentDate: Date;
+    // paymentId: string;
+    // email?: string;
+    // userId: string;
+    // orderId?: string;
+    // amount: number;
+
+    return pay;
   }
 
   saveOrder(): void {

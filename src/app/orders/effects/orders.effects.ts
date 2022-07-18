@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
-import { Order } from '../../shop/models/order.model';
+import { Order, Payment } from '../../shop/models/order.model';
 import { OrderService } from '../services/orders.service';
 import * as fromOrderActions from '../../orders/actions/orders.actions';
 import * as fromOrderReducer from '../../orders/reducers/orders.reducer';
@@ -52,6 +52,38 @@ export class OrdersEffects {
             this.basketStore.dispatch(new fromBasketActions.RemoveAll());
             this.orderStore.dispatch(new fromOrderActions.Reset());
             return this.router.navigate(['/']);
+        })          
+      )
+  }, { dispatch: false });
+  
+  payment$ = createEffect( () => {
+    return this.actions$.pipe(
+          ofType<fromOrderActions.SavePayment>(fromOrderActions.OrderActionTypes.SavePayment),
+          switchMap( (action: fromOrderActions.SavePayment) => 
+            this.orderService.savePayment(action.payload)
+          ),
+          map( (payment) => {
+              return new fromOrderActions.SavePaymentComplete(<Payment>payment);
+            }),
+          catchError (error => of(error))
+          )
+  }, {dispatch: true}
+  );
+
+  paymentSuccess$ =  createEffect( () => {
+    return this.actions$.pipe(
+        ofType<fromOrderActions.SaveOrderComplete>(fromOrderActions.OrderActionTypes.SavePaymentComplete),
+        switchMap( (action) => {
+            // this.snackBar.open('Order & Payment  success.', 'Close',{
+            // duration: 5000,
+            // panelClass: ["snack-notification"],
+            // horizontalPosition: "center",
+            // verticalPosition: "top"
+            // });
+            // this.basketStore.dispatch(new fromBasketActions.RemoveAll());
+            // this.orderStore.dispatch(new fromOrderActions.Reset());
+            // return this.router.navigate(['/']);
+            return null;
         })          
       )
     }, { dispatch: false });
