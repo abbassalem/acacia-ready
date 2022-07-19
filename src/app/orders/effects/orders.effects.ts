@@ -23,7 +23,6 @@ export class OrdersEffects {
         private router: Router) {
   }
   
-  
   saveOrder$ = createEffect( () => {
     return this.actions$.pipe(
           ofType<fromOrderActions.SaveOrder>(fromOrderActions.OrderActionTypes.SaveOrder),
@@ -51,8 +50,8 @@ export class OrdersEffects {
 
             this.basketStore.dispatch(new fromBasketActions.RemoveAll());
             this.orderStore.dispatch(new fromOrderActions.Reset());
-            return this.router.navigate(['/']);
-        })          
+            return this.router.navigate(['/shop/payment/OK']);
+        }),          
       )
   }, { dispatch: false });
   

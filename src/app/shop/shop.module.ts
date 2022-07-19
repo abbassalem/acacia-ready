@@ -19,6 +19,7 @@ import { BasketEffects } from './effects/basket.effects';
 import { ProductEffects } from './effects/product.effects';
 import { reducers } from './reducers';
 import { AngularFireFunctionsModule} from '@angular/fire/compat/functions'
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { AngularFireFunctionsModule} from '@angular/fire/compat/functions'
       { path: '', redirectTo: 'categories/0', pathMatch: 'full'},
       { path: 'categories/:id', component: ProductListPageComponent},
       { path: 'products/:productId', component: ProductViewPageComponent},
-      { path: 'basket', component: BasketPageComponent}
+      { path: 'basket', component: BasketPageComponent},
+      { path: 'payment/:success', component: PaymentComponent}
     ]),
 
     StoreModule.forFeature('shop', reducers),
@@ -44,7 +46,8 @@ import { AngularFireFunctionsModule} from '@angular/fire/compat/functions'
     ProductListComponent,
     ProductViewComponent,
     ProductDetailComponent,
-    BasketComponent
+    BasketComponent,
+    PaymentComponent
   ]
 })
 

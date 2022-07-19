@@ -1,0 +1,7 @@
+<mat-card *ngIf="success === 'OK'" color="success">
+    <h4 class="success">Order & Payment successful accepted</h4>
+</mat-card>
+
+<mat-card *ngIf="success !== 'OK'"  color="success">
+    <h4 class="decline">Payment declined</h4>
+</mat-card>

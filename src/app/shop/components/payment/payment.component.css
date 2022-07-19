@@ -1,0 +1,11 @@
+.success {
+    color: green; 
+    font-family: luto; 
+    text-align: center;
+}
+
+.decline {
+    color: red; 
+    font-family: luto; 
+    text-align: center;
+}

@@ -16,6 +16,7 @@ import { OrderState } from 'src/app/orders/reducers/orders.reducer';
 // import { Stripe } from 'stripe';
 import { environment } from 'src/environments/environment';
 import { fadeInItems } from '@angular/material/menu';
+import { Router } from '@angular/router';
 
 // declare var Stripe;
 
@@ -54,6 +55,7 @@ export class BasketComponent implements OnInit {
 
   constructor(private store: Store<OrderState>,
               private location: Location,
+              private router: Router,
               private fb: FormBuilder,
               private authStore: Store<fromAuth.State> ) { 
   }
@@ -109,6 +111,8 @@ export class BasketComponent implements OnInit {
         let payData = this.setPaymentData(stripeToken);
         this.store.dispatch(new fromOrderActions.SavePayment(payData));
         this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
+        // this.router.navigate(['payment/OK']);
+        
       }
     });
   
