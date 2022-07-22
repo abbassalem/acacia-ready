@@ -55,7 +55,6 @@ export class BasketComponent implements OnInit {
 
   constructor(private store: Store<OrderState>,
               private location: Location,
-              private router: Router,
               private fb: FormBuilder,
               private authStore: Store<fromAuth.State> ) { 
   }
@@ -102,7 +101,7 @@ export class BasketComponent implements OnInit {
 
   initializePayment() {
    
-    this.saveOrder();
+    this.setOrder();
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: environment.stripe.key,
       locale: 'auto',
@@ -110,9 +109,7 @@ export class BasketComponent implements OnInit {
         this.order.paid = true;
         let payData = this.setPaymentData(stripeToken);
         this.store.dispatch(new fromOrderActions.SavePayment(payData));
-        this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
-        // this.router.navigate(['payment/OK']);
-        
+        this.store.dispatch(new fromOrderActions.SaveOrder(this.order));    
       }
     });
   
@@ -163,7 +160,7 @@ export class BasketComponent implements OnInit {
     return pay;
   }
 
-  saveOrder(): void {
+  setOrder(): void {
       this.order = {
         deliveryDate: this.basketForm.controls['deliveryGroup'].get('deliveryDate').value.getTime(),
         deliveryTime: this.basketForm.controls['deliveryGroup'].get('deliveryTime').value,
@@ -176,7 +173,7 @@ export class BasketComponent implements OnInit {
         amount: this.getTotal()
       };
 
-      // this.store.dispatch(new fromOrderActions.SaveOrder(this.order));
+      // this.store.dispatch(new fromOrderActions.SetOrder(this.order));
       // this.checkoutFirebase(123);
 
   }
