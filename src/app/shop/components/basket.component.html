@@ -52,7 +52,7 @@
 
             </td>
             <td class="mat-header-cell" *ngIf="selectedIndex !== i">
-                <button  mat-flat-button class="hand" (click)="delete(i)">
+                <button  mat-flat-button class="hand" (click)="delete(i)"> 
                     <mat-icon>delete_forever</mat-icon>
                 </button>
             </td>
@@ -60,13 +60,15 @@
             <td class="mat-header-cell" 
                 *ngIf="(operation === 'EDIT' || operation === 'DELETE')  && selectedIndex === i">
                 <button color="accent" mat-flat-button  (click)="saveBasketItem()">
-                    <mat-icon>check_circle</mat-icon>
+                    <!-- <mat-icon>check_circle</mat-icon> -->
+                    OK
                 </button>
                
             </td>
             <td  class="mat-header-cell" *ngIf="(operation === 'EDIT' || operation === 'DELETE') && selectedIndex === i">
                 <button color="accent" mat-flat-button  (click)="cancel()">
-                    <mat-icon>cancel</mat-icon>
+                    <!-- <mat-icon>cancel</mat-icon> -->
+                    Cancel
                 </button>
             </td>
             <!-- <td  class="mat-header-cell" *ngIf="(operation === 'EDIT' || operation === 'DELETE') && selectedIndex === i">
