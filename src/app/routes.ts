@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth/services/auth-guard.service';
 import { NotFoundPageComponent } from './core/containers/not-found-page.component';
 
 export const routes: Routes = [
@@ -13,11 +14,13 @@ export const routes: Routes = [
   },
   {
     path: 'orders',
-    loadChildren: () => import('./orders/orders.module').then( module => module.OrdersModule)
+    loadChildren: () => import('./orders/orders.module').then( module => module.OrdersModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'account',
-    loadChildren: () => import('./account/account.module').then( module => module.AccountModule)
+    loadChildren: () => import('./account/account.module').then( module => module.AccountModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'auth',

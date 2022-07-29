@@ -13,7 +13,7 @@ import { AddOrderItems } from 'src/app/shop/actions/basket.actions';
   selector: 'app-order-list-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <app-order-search (searchCriteriaChange)= "executeQuery($event)"  >
+  <app-order-search (searchCriteriaChange)= "executeQuery($event)" [orderCount]="orderCount"  >
   </app-order-search>
 
     <app-order-list (addToBasketEvent)="addToBasket($event)" [orderList]="orders$ | async">
@@ -32,6 +32,7 @@ export class OrderListPageComponent implements OnInit {
 
   orders$: Observable<Order[]>;
   selectedOrderId$: Observable<string>;
+  orderCount: number;
 
   loggedUserId: string;
 
@@ -51,6 +52,7 @@ export class OrderListPageComponent implements OnInit {
     this.orderStore.dispatch(new Reset);
     this.orderStore.dispatch(new Load(payload));
     this.orders$ = this.orderStore.select(fromOrderReducer.getOrders);
+    this.orders$.subscribe( orders => this.orderCount = orders.length);
   }
 
   addToBasket(event) {

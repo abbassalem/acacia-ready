@@ -72,13 +72,13 @@ export class OrderListComponent {
    
     { headerName: 'Order Date - Expand for Items',
        field: 'orderDate', pinned: 'left',lockPinned:true,lockVisible: true,
-        cellStyle: {'color': 'yellow', 'font-weight': 'bold'},
-        cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate)},
+        cellStyle: {'color': 'yellow', 'font-weight': 'bold', 'min-width': '80px'},
+        cellRenderer: 'agGroupCellRenderer', valueFormatter: params => this.dateFormatter(params.data.orderDate, true)},
     {headerName: 'Status',field: 'status'},
     {headerName: 'Amount  (£)',field: 'amount',sortable: true, valueFormatter: params =>  params.data.amount.toFixed(2)},
     { headerName: 'Order Payment',field: 'paid', cellRenderer: CheckboxRenderer },
     { headerName: 'Delivery Date',field: 'deliveryDate', 
-            valueFormatter: params => this.dateFormatter(params.data.deliveryDate)},
+            valueFormatter: params => this.dateFormatter(params.data.deliveryDate, false)},
     { headerName: 'Delivery Time',field: 'deliveryTime'},
     { headerName: '', field: '',  cellRenderer: ButtonRendererComponent,
         cellRendererParams: {
@@ -115,11 +115,19 @@ export class OrderListComponent {
     this.addToBasketEvent.emit(items);
   }
 
-  dateFormatter(date): string {
-    let str = new Date(date).getDate().toString() + '/' + 
-    new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
+  dateFormatter(date: Date, withTime: boolean ): string {
+    
+    let str:string;
+    if(withTime){
+      str = new Date(date).getDate().toString() + '/' + 
+      new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString() + '-' + new Date(date).getHours().toString().padStart(2,'0') + ':' + new Date(date).getMinutes().toString().padStart(2,'0');
+    } else {
+      str = new Date(date).getDate().toString() + '/' + 
+      new Date(date).getMonth().toString() +  '/' + new Date(date).getFullYear().toString();
+    }
     return str;
   }
+
 
   getRowNodeId(params)  {
     return params.id;

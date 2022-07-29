@@ -1,30 +1,29 @@
 import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { OrderSearchCriteria, OrderStatus } from 'src/app/shop/models/order.model';
 
 @Component({
   selector: 'app-order-search',
   template: `
   <form [formGroup]="searchGroup">
+  <mat-tab-group (selectedTabChange)="tabChange($event)"  >
+  <mat-tab> 
+      <ng-template matTabLabel *ngIf="activeTab === 0">
+          <span [matBadge]="orderCount" matBadgeOverlap="false">Open Orders</span>
+      </ng-template>
+      <ng-template matTabLabel *ngIf="activeTab !== 0">
+          <span matBadgeOverlap="false">Open Orders</span>
+      </ng-template>
       <mat-toolbar>
         <mat-toolbar-row>
-            <h6 style="float: right"><small>Search order</small></h6>
-      </mat-toolbar-row>
-      
-      <mat-toolbar-row>    
-      <!-- <mat-form-field style="max-width: fit-content;" >
-            <input  matInput [matDatepicker]="picker1" placeholder="Choose start date" formControlName="startDate">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
-      &nbsp;&nbsp;
-      <mat-form-field style="max-width: fit-content;">
-            <input matInput [matDatepicker]="picker2" placeholder="Choose end date" formControlName="endDate">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field> -->
-        &nbsp;&nbsp;
-            
+        </mat-toolbar-row>
+       </mat-toolbar> 
+  </mat-tab>
+ 
+  <mat-tab label="Search Orders"> 
+      <mat-toolbar>
+      <mat-toolbar-row>            
         <mat-form-field>
               <mat-select formControlName="orderStatus">
                   <mat-option *ngFor= "let status of statusList" [value]="status.value" 
@@ -37,7 +36,9 @@ import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
             <mat-icon>search</mat-icon>Search
         </button>
       </mat-toolbar-row>
-    </mat-toolbar>    
+    </mat-toolbar> 
+  </mat-tab>
+  </mat-tab-group>
   </form>
   `,
   styles: [
@@ -74,9 +75,10 @@ import { OrderSearchCriteria } from 'src/app/shop/models/order.model';
   ],
 })
 export class OrderSearchComponent implements OnInit {
+  
   @Input() query = '';
-  @Input() searching = false;
-  @Input() error = '';
+  activeTab: number = 0;
+  @Input() orderCount?: number;
   @Output() searchCriteriaChange = new EventEmitter<OrderSearchCriteria>();
 
   searchGroup: FormGroup;
@@ -94,6 +96,7 @@ export class OrderSearchComponent implements OnInit {
         orderStatus: new FormControl('ALL')
       }
     );   
+    this.openOrders();
   }
    
   initilizeStatusList(){
@@ -104,16 +107,47 @@ export class OrderSearchComponent implements OnInit {
     this.statusList.push({value: 'CANCELLED', label: 'Cancelled', isSelected: false});
   }
 
+  openOrders(){
+    this.executeSearch(true);
+  }
 
-executeSearch() {
+  tabChange(event: MatTabChangeEvent) {
+    this.activeTab = event.index;
+    if(event.index === 0){
+      this.executeSearch(true);
+    } else {
+      this.executeSearch();
+    }
+} 
+
+// executeSearch() {
    
-  let orderSearchCriteria: OrderSearchCriteria = {
-    start: this.searchGroup.get('startDate').value.getTime(),
-    end: this.searchGroup.get('endDate').value.getTime(),
-    status: this.searchGroup.get('orderStatus').value,
+//   let orderSearchCriteria: OrderSearchCriteria = {
+//     start: this.searchGroup.get('startDate').value.getTime(),
+//     end: this.searchGroup.get('endDate').value.getTime(),
+//     status: this.searchGroup.get('orderStatus').value,
+//   };
+//   this.searchCriteriaChange.emit(orderSearchCriteria);
+// }
+// }
+
+executeSearch(open?: boolean) {
+
+  let orderSearchCriteria: OrderSearchCriteria ;
+  if(open){
+    orderSearchCriteria = {
+      status: OrderStatus.OPEN
+    }
+  } else {
+    orderSearchCriteria = {
+      start: this.searchGroup.get('startDate').value.getTime(),
+      end: this.searchGroup.get('endDate').value.getTime(),
+      status: this.searchGroup.get('orderStatus').value
+    }
   };
   this.searchCriteriaChange.emit(orderSearchCriteria);
 }
+
 }
 
 export interface Status {
