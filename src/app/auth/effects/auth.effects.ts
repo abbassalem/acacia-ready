@@ -10,7 +10,7 @@ import { BasketState } from '../../shop/reducers/basket.reducer';
 import { Reset } from '../../orders/actions/orders.actions';
 import { OrderState } from '../../orders/reducers/orders.reducer';
 import { Store } from '@ngrx/store';
-import { AuthProvider, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { AuthProvider, FacebookAuthProvider, GoogleAuthProvider, TwitterAuthProvider } from 'firebase/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
@@ -36,6 +36,10 @@ export class AuthEffects {
         }
         case 'facebook':{
           provider = new FacebookAuthProvider();
+          break;
+        }
+        case 'twitter':{
+          provider = new TwitterAuthProvider();
           break;
         }
       }
