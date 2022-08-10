@@ -89,6 +89,7 @@ export class AuthService {
            this.router.navigate(['/']);
         });
         // this.SetUserData(result.user);
+        console.dir(result.user);
         return Promise.resolve(this.SetUserData(result.user));
       })
       .catch((error) => {
@@ -105,7 +106,7 @@ export class AuthService {
     const userState: User = {
       uid: user.uid,
       email: user.email,
-      displayName: this.parseName(user.email),
+      displayName: this.parseName(user),
       photoURL: user.photoURL,
       // phoneNumber: extraData?.phoneNumber,
       emailVerified: user.emailVerified
@@ -118,8 +119,14 @@ export class AuthService {
       return userState;
   }
   
-  parseName(email: string) {
-    return email.substring(0,email.indexOf('@'));
+  parseName(user: any) {
+    if(user.displayName) {
+      return user.displayName;
+    } else if(user.email){
+      return user.email.substring(0,user.email.indexOf('@'));
+    }else {
+      return ''
+    }
   }
 
   SignOut() {
